@@ -12,11 +12,10 @@ main:
     url: /development/
     
   - title: "Writing"
-    url: /writing/    
-
+    url: /writing/
+    
   - title: "Acting"
     url: /acting/
-        
+    
   - title: "Weightlifting"
     url: /weightlifting/
-    
