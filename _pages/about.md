@@ -7,8 +7,6 @@ redirect_from:
   - /about.html
 ---
 
-I'm a versatile and results-driven Product Engineer with a proven track record of building scalable software solutions across healthcare and data processing industries. When I'm not architecting APIs or optimizing backend systems, you'll find me pursuing my passion for weightlifting and crafting stories as a published writer.
-
 # Professional Experience
 
 ## Magnus Health - New York, NY
