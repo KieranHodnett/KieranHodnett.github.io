@@ -10,9 +10,6 @@
 main:
   - title: "Development"
     url: /development/
-
-  - title: "CV"
-    url: /cv/
     
   - title: "Writing"
     url: /writing/    
@@ -23,8 +20,3 @@ main:
   - title: "Weightlifting"
     url: /weightlifting/
     
-  # - title: "CV"
-  #   url: /cv-json/
-    
-  - title: "Guide"
-    url: /markdown/
