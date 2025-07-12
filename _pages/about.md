@@ -16,14 +16,14 @@ redirect_from:
 * **Production System Optimization:** Enhanced search functionality and database performance across 9 interconnected web applications, utilizing monitoring tools like Datadog and API testing with Postman to ensure 99.9% uptime and optimal user experience.
 * **Cross-Functional Collaboration & User Experience Impact:** Partnered directly with customer service teams to resolve complex technical support tickets, translating technical solutions into customer-facing communications while maintaining consistent delivery velocity through organizational transitions. Contributed to mobile application improvements that drove user satisfaction from a 2.3 to 4.8 star rating on the Apple App Store.
 
-## National Oceanic and Atmospheric Association (NOAA) - New York, NY
+## National Oceanic and Atmospheric Association (NOAA) - Asheville, NC
 **Software Developer** | *March 2020 – April 2022*
 
 * **Backend Architecture:** Designed and implemented metadata processing systems using Java, Groovy, and Python to handle diverse XML data formats, creating scalable solutions for complex data manipulation and transformation workflows.
 * **Compliance-Driven Development:** Independently architected Section 508 compliant PDF generation system using internal XML data sources, ensuring accessibility standards while delivering a seamless web application experience.
 * **Agile Delivery Excellence:** Consistently met contract deliverables working in dynamic 2-5 person teams using Agile methodologies, delivering bi-weekly sprint demonstrations and maintaining high-quality code standards under tight deadlines.
 
-## Winefetch - New York, NY
+## Winefetch - Durham, NC
 **Software Engineering Intern** | *October 2019 – March 2020*
 
 * **Mobile Application Development:** Single-handedly built and deployed iOS application using Cordova, WKWebKit, and Framework7 technologies, creating a streamlined user experience from concept to App Store deployment.
