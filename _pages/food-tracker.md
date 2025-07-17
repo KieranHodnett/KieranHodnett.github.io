@@ -7,14 +7,21 @@ author_profile: false
 
 <div class="food-tracker-container">
   <header class="header">
-    <h1>🍽️ Magdalena Food Tracker</h1>
-    <p class="subtitle">Track your meals and how they make you feel</p>
+    <div class="header-content">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik04IDEySDMyVjE2SDhWMTJaIiBmaWxsPSIjMDA5OTAwIi8+CjxwYXRoIGQ9Ik04IDE4SDMyVjIySDhWMThaIiBmaWxsPSIjMDA5OTAwIi8+CjxwYXRoIGQ9Ik04IDI0SDMyVjI4SDhWMjRaIiBmaWxsPSIjMDA5OTAwIi8+Cjwvc3ZnPgo=" alt="Energy" class="header-icon energy-icon">
+      <h1>🍽️ Magdalena Food Tracker</h1>
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTgiIGZpbGw9IiNGRkYwRjAiLz4KPGNpcmNsZSBjeD0iMTUiIGN5PSIxNSIgcj0iMiIgZmlsbD0iIzAwMCIvPgo8Y2lyY2xlIGN4PSIyNSIgY3k9IjE1IiByPSIyIiBmaWxsPSIjMDAwIi8+CjxwYXRoIGQ9Ik0xNSAyNUMxNSAyNSAxOCAyOCAyMCAyOEMyMiAyOCAyNSAyNSAyNSAyNSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwIDEwQzEwIDEwIDEyIDggMTUgOEMxOCA4IDIwIDEwIDIwIDEwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNMjAgMTBDMjAgMTAgMjIgOCAyNSA4QzI4IDggMzAgMTAgMzAgMTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPgo=" alt="Bunny" class="header-icon bunny-icon">
+    </div>
+    <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
 
   <main class="main-content">
     <!-- Add Entry Form -->
     <section class="form-section">
-      <h2>Add New Entry</h2>
+      <div class="section-header">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDkuNzRMMTIgMTZMMTAuOTEgOS43NEw0IDlMMTAuOTEgOC4yNkwxMiAyWiIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Star" class="section-icon">
+        <h2>Add New Entry</h2>
+      </div>
       <form id="foodForm" class="food-form">
         <div class="form-group">
           <label for="food">Food you ate</label>
@@ -48,15 +55,24 @@ author_profile: false
           <input type="text" id="feeling" name="feeling" required placeholder="e.g., Energized, tired, satisfied, bloated">
         </div>
 
-        <button type="submit" class="submit-btn">Add Entry</button>
+        <button type="submit" class="submit-btn">
+          <span>Add Entry</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDJMMTEuMDkgNC4xM0wxNCA0TDEyIDZMMTQgOEwxMS4wOSA3Ljg3TDEwIDEwTDguOTEgNy44N0w2IDhMOCA2TDYgNEw4LjkxIDQuMTNMMTAgMloiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+Cg==" alt="Sparkle" class="btn-icon">
+        </button>
       </form>
     </section>
 
     <!-- Display Section -->
     <section class="display-section">
       <div class="display-header">
-        <h2>Recent Entries</h2>
-        <button id="toggleView" class="toggle-btn">Show All Data</button>
+        <div class="section-header">
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDkuNzRMMTIgMTZMMTAuOTEgOS43NEw0IDlMMTAuOTEgOC4yNkwxMiAyWiIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Star" class="section-icon">
+          <h2>Recent Entries</h2>
+        </div>
+        <button id="toggleView" class="toggle-btn">
+          <span>Show All Data</span>
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMTJMMTIgOEw4IDQiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTIgOEg0IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==" alt="Arrow" class="btn-icon">
+        </button>
       </div>
       
       <div id="entriesContainer" class="entries-container">
@@ -64,14 +80,35 @@ author_profile: false
       </div>
     </section>
   </main>
+
+  <!-- Floating decorative elements -->
+  <div class="floating-elements">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-1">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iIzAwRkZGRiIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-2">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-3">
+  </div>
 </div>
 
 <style>
-/* Food Tracker Styles */
+/* Food Tracker Styles - Cutesy Pink & Mint Theme */
 .food-tracker-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background gradient */
+.food-tracker-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #FFE6F2 0%, #E6FFF2 50%, #FFF0E6 100%);
+  z-index: -1;
 }
 
 /* Header */
@@ -79,19 +116,61 @@ author_profile: false
   text-align: center;
   margin-bottom: 3rem;
   color: #333;
+  position: relative;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  animation: bounce 2s infinite;
+}
+
+.energy-icon {
+  animation-delay: 0s;
+}
+
+.bunny-icon {
+  animation-delay: 0.5s;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 .header h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #2d3748;
+  margin: 0;
+  color: #FF69B4;
+  text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+  background: linear-gradient(45deg, #FF69B4, #98FB98);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
   font-size: 1.1rem;
   font-weight: 300;
-  color: #718096;
+  color: #FF69B4;
+  opacity: 0.8;
 }
 
 /* Main content */
@@ -117,18 +196,52 @@ author_profile: false
   }
 }
 
+/* Section headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-icon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
 /* Form section */
 .form-section {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+  border: 2px solid #FFE6F2;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF69B4, #98FB98, #FF69B4);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .form-section h2 {
-  color: #4a5568;
-  margin-bottom: 1.5rem;
+  color: #FF69B4;
+  margin: 0;
   font-weight: 600;
 }
 
@@ -146,25 +259,25 @@ author_profile: false
 
 .form-group label {
   font-weight: 500;
-  color: #4a5568;
+  color: #FF69B4;
   font-size: 0.9rem;
 }
 
 .form-group input[type="text"],
 .form-group input[type="time"] {
   padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
+  border: 2px solid #FFE6F2;
+  border-radius: 12px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #FF69B4;
   background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
 }
 
 /* Enjoyment buttons */
@@ -177,9 +290,9 @@ author_profile: false
 .enjoyment-btn {
   flex: 1;
   padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  background: #f8fafc;
-  border-radius: 8px;
+  border: 2px solid #FFE6F2;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -190,49 +303,90 @@ author_profile: false
 }
 
 .enjoyment-btn:hover {
-  border-color: #667eea;
+  border-color: #FF69B4;
   background: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
 }
 
 .enjoyment-btn.selected {
-  border-color: #667eea;
-  background: #667eea;
+  border-color: #FF69B4;
+  background: linear-gradient(135deg, #FF69B4, #98FB98);
   color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
 }
 
 /* Submit button */
 .submit-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #FF69B4 0%, #98FB98 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
 }
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
 }
 
 .submit-btn:active {
   transform: translateY(0);
 }
 
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
 /* Display section */
 .display-section {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(152, 251, 152, 0.2);
+  border: 2px solid #E6FFF2;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.display-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #98FB98, #FF69B4, #98FB98);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite reverse;
 }
 
 .display-header {
@@ -245,25 +399,30 @@ author_profile: false
 }
 
 .display-header h2 {
-  color: #4a5568;
+  color: #98FB98;
+  margin: 0;
   font-weight: 600;
 }
 
 .toggle-btn {
-  background: #f1f5f9;
-  color: #4a5568;
-  border: 2px solid #e2e8f0;
+  background: rgba(152, 251, 152, 0.1);
+  color: #98FB98;
+  border: 2px solid #E6FFF2;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .toggle-btn:hover {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: rgba(152, 251, 152, 0.2);
+  border-color: #98FB98;
+  transform: translateY(-1px);
 }
 
 /* Entries container */
@@ -274,17 +433,29 @@ author_profile: false
 }
 
 .entry-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #FFE6F2;
+  border-radius: 16px;
   padding: 1.5rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.entry-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #FF69B4, #98FB98);
 }
 
 .entry-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  border-color: #cbd5e1;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.15);
+  border-color: #FF69B4;
 }
 
 .entry-header {
@@ -298,13 +469,13 @@ author_profile: false
 
 .food-name {
   font-weight: 600;
-  color: #2d3748;
+  color: #FF69B4;
   font-size: 1.1rem;
   flex: 1;
 }
 
 .entry-time {
-  color: #718096;
+  color: #98FB98;
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -324,14 +495,14 @@ author_profile: false
 
 .detail-label {
   font-size: 0.8rem;
-  color: #718096;
+  color: #FF69B4;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .detail-value {
-  color: #4a5568;
+  color: #333;
   font-weight: 500;
 }
 
@@ -340,7 +511,7 @@ author_profile: false
 }
 
 .feeling-badge {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #FF69B4 0%, #98FB98 100%);
   color: white;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
@@ -353,19 +524,63 @@ author_profile: false
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: #718096;
+  color: #FF69B4;
 }
 
 .empty-state h3 {
   margin-bottom: 0.5rem;
-  color: #4a5568;
+  color: #FF69B4;
 }
 
 /* Loading state */
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #718096;
+  color: #FF69B4;
+}
+
+/* Floating decorative elements */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-element {
+  position: absolute;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.flower-1 {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.flower-2 {
+  top: 20%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.flower-3 {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
 }
 
 /* Responsive adjustments */
@@ -389,6 +604,12 @@ author_profile: false
   
   .toggle-btn {
     text-align: center;
+    justify-content: center;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
@@ -500,13 +721,13 @@ class FoodTracker {
 
     showSuccessMessage() {
         const submitBtn = document.querySelector('.submit-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = '✓ Added!';
+        const originalText = submitBtn.querySelector('span').textContent;
+        submitBtn.querySelector('span').textContent = '✓ Added!';
         submitBtn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
         
         setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            submitBtn.querySelector('span').textContent = originalText;
+            submitBtn.style.background = 'linear-gradient(135deg, #FF69B4 0%, #98FB98 100%)';
         }, 2000);
     }
 
@@ -691,7 +912,7 @@ class FoodTracker {
     toggleView() {
         this.showAllData = !this.showAllData;
         const toggleBtn = document.getElementById('toggleView');
-        toggleBtn.textContent = this.showAllData ? 'Show Recent Only' : 'Show All Data';
+        toggleBtn.querySelector('span').textContent = this.showAllData ? 'Show Recent Only' : 'Show All Data';
         this.displayEntries();
     }
 }
