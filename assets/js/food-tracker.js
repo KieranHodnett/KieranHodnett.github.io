@@ -252,28 +252,25 @@ class FoodTracker {
     }
 
     setupEditEventListeners() {
-        // Edit buttons
-        document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        // Use event delegation for dynamically created buttons
+        document.addEventListener('click', (e) => {
+            // Edit buttons
+            if (e.target.classList.contains('edit-btn')) {
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.startEditing(entryId);
-            });
-        });
-
-        // Save buttons
-        document.querySelectorAll('.save-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            }
+            
+            // Save buttons
+            if (e.target.classList.contains('save-btn')) {
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.saveEdit(entryId);
-            });
-        });
-
-        // Cancel buttons
-        document.querySelectorAll('.cancel-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            }
+            
+            // Cancel buttons
+            if (e.target.classList.contains('cancel-btn')) {
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.cancelEdit(entryId);
-            });
+            }
         });
     }
 
@@ -309,11 +306,18 @@ class FoodTracker {
     }
 
     saveEdit(entryId) {
+        console.log('Save edit called for entry:', entryId);
         const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
-        if (!entryCard) return;
+        if (!entryCard) {
+            console.error('Entry card not found for ID:', entryId);
+            return;
+        }
 
         const input = entryCard.querySelector('.edit-feeling-input');
-        if (!input) return;
+        if (!input) {
+            console.error('Input field not found');
+            return;
+        }
 
         const newFeeling = input.value.trim();
         if (!newFeeling) {
@@ -321,11 +325,16 @@ class FoodTracker {
             return;
         }
 
+        console.log('Saving new feeling:', newFeeling);
+
         // Update entry in data
         const entry = this.entries.find(e => e.id === entryId);
         if (entry) {
             entry.feeling = newFeeling;
             this.saveData();
+            console.log('Entry updated in data');
+        } else {
+            console.error('Entry not found in data for ID:', entryId);
         }
 
         // Update display
@@ -340,14 +349,22 @@ class FoodTracker {
 
         this.editingEntryId = null;
         this.showEditSuccessMessage(entryCard);
+        console.log('Save edit completed');
     }
 
     cancelEdit(entryId) {
+        console.log('Cancel edit called for entry:', entryId);
         const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
-        if (!entryCard) return;
+        if (!entryCard) {
+            console.error('Entry card not found for ID:', entryId);
+            return;
+        }
 
         const entry = this.entries.find(e => e.id === entryId);
-        if (!entry) return;
+        if (!entry) {
+            console.error('Entry not found in data for ID:', entryId);
+            return;
+        }
 
         // Restore original feeling
         const feelingElement = entryCard.querySelector('.feeling-badge');
@@ -360,6 +377,7 @@ class FoodTracker {
         }
 
         this.editingEntryId = null;
+        console.log('Cancel edit completed');
     }
 
     showEditSuccessMessage(entryCard) {
