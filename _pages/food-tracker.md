@@ -8,9 +8,9 @@ author_profile: false
 <div class="food-tracker-container">
   <header class="header">
     <div class="header-content">
-      <img src="/assets/images/energy-icon.svg" alt="Energy" class="header-icon energy-icon">
+      <span class="header-icon energy-icon">⚡</span>
       <h1>🍽️ Magdalena Food Tracker</h1>
-      <img src="/assets/images/bunny-icon.svg" alt="Bunny" class="header-icon bunny-icon">
+      <span class="header-icon bunny-icon">🐰</span>
     </div>
     <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
@@ -19,7 +19,7 @@ author_profile: false
     <!-- Add Entry Form -->
     <section class="form-section">
       <div class="section-header">
-        <img src="/assets/images/star-icon.svg" alt="Star" class="section-icon">
+        <span class="section-icon">⭐</span>
         <h2>Add New Entry</h2>
       </div>
       <form id="foodForm" class="food-form">
@@ -66,7 +66,7 @@ author_profile: false
     <section class="display-section">
       <div class="display-header">
         <div class="section-header">
-          <img src="/assets/images/star-icon.svg" alt="Star" class="section-icon">
+          <span class="section-icon">⭐</span>
           <h2>Recent Entries</h2>
         </div>
         <button id="toggleView" class="toggle-btn">
@@ -128,10 +128,10 @@ author_profile: false
 }
 
 .header-icon {
-  width: 40px;
-  height: 40px;
+  font-size: 2rem;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   animation: bounce 2s infinite;
+  display: inline-block;
 }
 
 .energy-icon {
@@ -205,9 +205,9 @@ author_profile: false
 }
 
 .section-icon {
-  width: 24px;
-  height: 24px;
+  font-size: 1.2rem;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+  display: inline-block;
 }
 
 /* Form section */
@@ -734,28 +734,14 @@ class FoodTracker {
     async loadData() {
         // First try to load from localStorage
         const localStorageData = localStorage.getItem('foodTrackerData');
-        if (localStorageData) {
+        if (localStorageData && localStorageData.trim() !== '') {
             this.parseCSV(localStorageData);
             this.displayEntries();
             return;
         }
 
-        // If no localStorage data, try to load from CSV file
-        try {
-            const response = await fetch(this.csvFile);
-            if (response.ok) {
-                const csvText = await response.text();
-                this.parseCSV(csvText);
-                // Save to localStorage for future use
-                localStorage.setItem('foodTrackerData', csvText);
-            } else {
-                // Create new CSV file if it doesn't exist
-                await this.createInitialCSV();
-            }
-        } catch (error) {
-            console.log('No existing data found, creating new file');
-            await this.createInitialCSV();
-        }
+        // If no localStorage data, create initial data with samples
+        await this.createInitialCSV();
         this.displayEntries();
     }
 
@@ -795,18 +781,26 @@ class FoodTracker {
             `"${entry.food}","${entry.timeOfDay}","${entry.amount}","${entry.enjoyment}","${entry.feeling}","${entry.timestamp}"`
         ).join('\n');
         
+        console.log('Creating initial CSV with sample data:', sampleCSV);
         localStorage.setItem('foodTrackerData', sampleCSV);
         this.parseCSV(sampleCSV);
     }
 
     parseCSV(csvText) {
+        console.log('Parsing CSV:', csvText);
         const lines = csvText.trim().split('\n');
-        if (lines.length <= 1) return; // Only headers or empty
+        console.log('CSV lines:', lines);
+        
+        if (lines.length <= 1) {
+            console.log('Only headers or empty CSV');
+            return;
+        }
 
         this.entries = [];
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i];
             const values = this.parseCSVLine(line);
+            console.log(`Line ${i} values:`, values);
             
             if (values.length >= 5) {
                 this.entries.push({
@@ -820,6 +814,7 @@ class FoodTracker {
             }
         }
 
+        console.log('Parsed entries:', this.entries);
         // Sort by timestamp, newest first
         this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     }
