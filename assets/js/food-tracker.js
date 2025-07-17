@@ -144,6 +144,9 @@ class FoodTracker {
             try {
                 this.entries = JSON.parse(savedData);
                 console.log('Loaded entries from localStorage:', this.entries);
+                
+                // Migrate existing entries to have IDs if they don't
+                this.migrateEntries();
             } catch (error) {
                 console.error('Error parsing saved data:', error);
                 this.entries = [];
@@ -156,6 +159,22 @@ class FoodTracker {
         // Sort by timestamp, newest first
         this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
         this.displayEntries();
+    }
+
+    migrateEntries() {
+        let needsMigration = false;
+        
+        this.entries.forEach(entry => {
+            if (!entry.id) {
+                entry.id = this.generateId();
+                needsMigration = true;
+            }
+        });
+        
+        if (needsMigration) {
+            console.log('Migrating entries to include IDs');
+            this.saveData();
+        }
     }
 
     createSampleData() {
@@ -221,10 +240,15 @@ class FoodTracker {
             return;
         }
 
+        console.log('Displaying entries:', entriesToShow);
         container.innerHTML = entriesToShow.map(entry => this.createEntryCard(entry)).join('');
         
         // Add event listeners for edit buttons
         this.setupEditEventListeners();
+        
+        // Debug: Check if edit buttons are present
+        const editButtons = document.querySelectorAll('.edit-btn');
+        console.log('Found edit buttons:', editButtons.length);
     }
 
     setupEditEventListeners() {
