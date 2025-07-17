@@ -8,9 +8,9 @@ author_profile: false
 <div class="food-tracker-container">
   <header class="header">
     <div class="header-content">
-      <span class="header-icon energy-icon">⚡</span>
+      <img src="/assets/images/energy-icon.svg" alt="Energy" class="header-icon energy-icon">
       <h1>🍽️ Magdalena Food Tracker</h1>
-      <span class="header-icon bunny-icon">🐰</span>
+      <img src="/assets/images/bunny-icon.svg" alt="Bunny" class="header-icon bunny-icon">
     </div>
     <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
@@ -83,9 +83,9 @@ author_profile: false
 
   <!-- Floating decorative elements -->
   <div class="floating-elements">
-    <span class="floating-element flower-1">🌸</span>
-    <span class="floating-element flower-2">🌿</span>
-    <span class="floating-element flower-3">🌸</span>
+    <img src="/assets/images/bunny-icon.svg" alt="Floating bunny" class="floating-element flower-1">
+    <img src="/assets/images/energy-icon.svg" alt="Floating energy" class="floating-element flower-2">
+    <img src="/assets/images/bunny-icon.svg" alt="Floating bunny" class="floating-element flower-3">
   </div>
 </div>
 
@@ -128,7 +128,8 @@ author_profile: false
 }
 
 .header-icon {
-  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   animation: bounce 2s infinite;
   display: inline-block;
@@ -574,7 +575,8 @@ author_profile: false
   position: absolute;
   opacity: 0.3;
   animation: float 6s ease-in-out infinite;
-  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .flower-1 {
