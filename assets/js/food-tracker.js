@@ -252,160 +252,49 @@ class FoodTracker {
     }
 
     setupEditEventListeners() {
-        // Use event delegation for dynamically created buttons
+        // Simple event delegation for edit buttons only
         document.addEventListener('click', (e) => {
-            console.log('Click detected on:', e.target.className);
-            
-            // Edit buttons
             if (e.target.classList.contains('edit-btn')) {
-                console.log('Edit button clicked');
+                console.log('Edit button clicked!');
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
+                console.log('Entry ID:', entryId);
                 this.startEditing(entryId);
-            }
-            
-            // Save buttons
-            if (e.target.classList.contains('save-btn')) {
-                console.log('Save button clicked');
-                const entryId = e.target.closest('.entry-card').dataset.entryId;
-                this.saveEdit(entryId);
-            }
-            
-            // Cancel buttons
-            if (e.target.classList.contains('cancel-btn')) {
-                console.log('Cancel button clicked');
-                const entryId = e.target.closest('.entry-card').dataset.entryId;
-                this.cancelEdit(entryId);
             }
         });
     }
 
     startEditing(entryId) {
+        console.log('Starting edit for entry:', entryId);
         this.editingEntryId = entryId;
         const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
-        if (!entryCard) return;
-
-        const feelingElement = entryCard.querySelector('.feeling-badge');
-        const originalFeeling = feelingElement.textContent;
-        
-        // Replace feeling badge with input field
-        feelingElement.innerHTML = `
-            <input type="text" class="edit-feeling-input" value="${this.escapeHtml(originalFeeling)}" placeholder="How did you feel?">
-            <div class="edit-buttons">
-                <button type="button" class="save-btn" data-entry-id="${entryId}">💾</button>
-                <button type="button" class="cancel-btn" data-entry-id="${entryId}">❌</button>
-            </div>
-        `;
-
-        // Add direct event listeners to the new buttons
-        const saveBtn = feelingElement.querySelector('.save-btn');
-        const cancelBtn = feelingElement.querySelector('.cancel-btn');
-        
-        if (saveBtn) {
-            saveBtn.addEventListener('click', () => this.saveEdit(entryId));
-        }
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => this.cancelEdit(entryId));
-        }
-
-        // Focus on input
-        const input = feelingElement.querySelector('.edit-feeling-input');
-        if (input) {
-            input.focus();
-            input.select();
-        }
-
-        // Hide edit button
-        const editBtn = entryCard.querySelector('.edit-btn');
-        if (editBtn) {
-            editBtn.style.display = 'none';
-        }
-    }
-
-    saveEdit(entryId) {
-        console.log('Save edit called for entry:', entryId);
-        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
         if (!entryCard) {
-            console.error('Entry card not found for ID:', entryId);
-            return;
-        }
-
-        const input = entryCard.querySelector('.edit-feeling-input');
-        if (!input) {
-            console.error('Input field not found');
-            return;
-        }
-
-        const newFeeling = input.value.trim();
-        if (!newFeeling) {
-            alert('Please enter a feeling');
-            return;
-        }
-
-        console.log('Saving new feeling:', newFeeling);
-
-        // Update entry in data
-        const entry = this.entries.find(e => e.id === entryId);
-        if (entry) {
-            entry.feeling = newFeeling;
-            this.saveData();
-            console.log('Entry updated in data');
-        } else {
-            console.error('Entry not found in data for ID:', entryId);
-        }
-
-        // Update display
-        const feelingElement = entryCard.querySelector('.feeling-badge');
-        feelingElement.innerHTML = `<span class="feeling-badge">${this.escapeHtml(newFeeling)}</span>`;
-
-        // Show edit button again
-        const editBtn = entryCard.querySelector('.edit-btn');
-        if (editBtn) {
-            editBtn.style.display = 'inline-block';
-        }
-
-        this.editingEntryId = null;
-        this.showEditSuccessMessage(entryCard);
-        console.log('Save edit completed');
-    }
-
-    cancelEdit(entryId) {
-        console.log('Cancel edit called for entry:', entryId);
-        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
-        if (!entryCard) {
-            console.error('Entry card not found for ID:', entryId);
+            console.error('Entry card not found');
             return;
         }
 
         const entry = this.entries.find(e => e.id === entryId);
         if (!entry) {
-            console.error('Entry not found in data for ID:', entryId);
+            console.error('Entry not found in data');
             return;
         }
 
-        // Restore original feeling
-        const feelingElement = entryCard.querySelector('.feeling-badge');
-        feelingElement.innerHTML = `<span class="feeling-badge">${this.escapeHtml(entry.feeling)}</span>`;
-
-        // Show edit button again
-        const editBtn = entryCard.querySelector('.edit-btn');
-        if (editBtn) {
-            editBtn.style.display = 'inline-block';
+        // Simple prompt approach - much more reliable
+        const newFeeling = prompt('Edit your feeling:', entry.feeling);
+        
+        if (newFeeling !== null && newFeeling.trim() !== '') {
+            console.log('Saving new feeling:', newFeeling);
+            entry.feeling = newFeeling.trim();
+            this.saveData();
+            this.displayEntries(); // Refresh the display
+            console.log('Feeling updated successfully');
+        } else {
+            console.log('Edit cancelled or empty feeling');
         }
-
+        
         this.editingEntryId = null;
-        console.log('Cancel edit completed');
     }
 
-    showEditSuccessMessage(entryCard) {
-        const feelingElement = entryCard.querySelector('.feeling-badge');
-        const originalContent = feelingElement.innerHTML;
-        
-        feelingElement.innerHTML = '<span class="feeling-badge updated">✓ Updated!</span>';
-        
-        setTimeout(() => {
-            feelingElement.innerHTML = originalContent;
-        }, 1500);
-    }
+
 
     createEntryCard(entry) {
         const enjoymentEmoji = this.getEnjoymentEmoji(entry.enjoyment);
