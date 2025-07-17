@@ -3,6 +3,7 @@ class FoodTracker {
         this.entries = [];
         this.showAllData = false;
         this.selectedEnjoyment = null;
+        this.editingEntryId = null;
         
         this.initializeApp();
     }
@@ -81,6 +82,7 @@ class FoodTracker {
 
         const formData = new FormData(event.target);
         const entry = {
+            id: this.generateId(),
             food: formData.get('food'),
             timeOfDay: formData.get('timeOfDay'),
             amount: formData.get('amount'),
@@ -99,6 +101,10 @@ class FoodTracker {
             console.error('Error adding entry:', error);
             alert('Error adding entry. Please try again.');
         }
+    }
+
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
     clearForm() {
@@ -155,6 +161,7 @@ class FoodTracker {
     createSampleData() {
         const sampleEntries = [
             {
+                id: this.generateId(),
                 food: 'Grilled salmon with quinoa',
                 timeOfDay: '12:30',
                 amount: '1 fillet with 1/2 cup quinoa',
@@ -163,6 +170,7 @@ class FoodTracker {
                 timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
             },
             {
+                id: this.generateId(),
                 food: 'Greek yogurt with berries',
                 timeOfDay: '09:15',
                 amount: '1 cup with 1/4 cup mixed berries',
@@ -171,6 +179,7 @@ class FoodTracker {
                 timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
             },
             {
+                id: this.generateId(),
                 food: 'Chicken stir-fry',
                 timeOfDay: '19:45',
                 amount: '1 bowl with vegetables',
@@ -213,6 +222,131 @@ class FoodTracker {
         }
 
         container.innerHTML = entriesToShow.map(entry => this.createEntryCard(entry)).join('');
+        
+        // Add event listeners for edit buttons
+        this.setupEditEventListeners();
+    }
+
+    setupEditEventListeners() {
+        // Edit buttons
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const entryId = e.target.closest('.entry-card').dataset.entryId;
+                this.startEditing(entryId);
+            });
+        });
+
+        // Save buttons
+        document.querySelectorAll('.save-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const entryId = e.target.closest('.entry-card').dataset.entryId;
+                this.saveEdit(entryId);
+            });
+        });
+
+        // Cancel buttons
+        document.querySelectorAll('.cancel-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const entryId = e.target.closest('.entry-card').dataset.entryId;
+                this.cancelEdit(entryId);
+            });
+        });
+    }
+
+    startEditing(entryId) {
+        this.editingEntryId = entryId;
+        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
+        if (!entryCard) return;
+
+        const feelingElement = entryCard.querySelector('.feeling-badge');
+        const originalFeeling = feelingElement.textContent;
+        
+        // Replace feeling badge with input field
+        feelingElement.innerHTML = `
+            <input type="text" class="edit-feeling-input" value="${this.escapeHtml(originalFeeling)}" placeholder="How did you feel?">
+            <div class="edit-buttons">
+                <button type="button" class="save-btn">💾</button>
+                <button type="button" class="cancel-btn">❌</button>
+            </div>
+        `;
+
+        // Focus on input
+        const input = feelingElement.querySelector('.edit-feeling-input');
+        if (input) {
+            input.focus();
+            input.select();
+        }
+
+        // Hide edit button
+        const editBtn = entryCard.querySelector('.edit-btn');
+        if (editBtn) {
+            editBtn.style.display = 'none';
+        }
+    }
+
+    saveEdit(entryId) {
+        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
+        if (!entryCard) return;
+
+        const input = entryCard.querySelector('.edit-feeling-input');
+        if (!input) return;
+
+        const newFeeling = input.value.trim();
+        if (!newFeeling) {
+            alert('Please enter a feeling');
+            return;
+        }
+
+        // Update entry in data
+        const entry = this.entries.find(e => e.id === entryId);
+        if (entry) {
+            entry.feeling = newFeeling;
+            this.saveData();
+        }
+
+        // Update display
+        const feelingElement = entryCard.querySelector('.feeling-badge');
+        feelingElement.innerHTML = `<span class="feeling-badge">${this.escapeHtml(newFeeling)}</span>`;
+
+        // Show edit button again
+        const editBtn = entryCard.querySelector('.edit-btn');
+        if (editBtn) {
+            editBtn.style.display = 'inline-block';
+        }
+
+        this.editingEntryId = null;
+        this.showEditSuccessMessage(entryCard);
+    }
+
+    cancelEdit(entryId) {
+        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
+        if (!entryCard) return;
+
+        const entry = this.entries.find(e => e.id === entryId);
+        if (!entry) return;
+
+        // Restore original feeling
+        const feelingElement = entryCard.querySelector('.feeling-badge');
+        feelingElement.innerHTML = `<span class="feeling-badge">${this.escapeHtml(entry.feeling)}</span>`;
+
+        // Show edit button again
+        const editBtn = entryCard.querySelector('.edit-btn');
+        if (editBtn) {
+            editBtn.style.display = 'inline-block';
+        }
+
+        this.editingEntryId = null;
+    }
+
+    showEditSuccessMessage(entryCard) {
+        const feelingElement = entryCard.querySelector('.feeling-badge');
+        const originalContent = feelingElement.innerHTML;
+        
+        feelingElement.innerHTML = '<span class="feeling-badge updated">✓ Updated!</span>';
+        
+        setTimeout(() => {
+            feelingElement.innerHTML = originalContent;
+        }, 1500);
     }
 
     createEntryCard(entry) {
@@ -221,7 +355,7 @@ class FoodTracker {
         const formattedDate = this.formatDate(entry.timestamp);
 
         return `
-            <div class="entry-card">
+            <div class="entry-card" data-entry-id="${entry.id}">
                 <div class="entry-header">
                     <div class="food-name">${this.escapeHtml(entry.food)}</div>
                     <div class="entry-time">${formattedTime} • ${formattedDate}</div>
@@ -239,6 +373,7 @@ class FoodTracker {
                         <div class="detail-label">Feeling</div>
                         <div class="detail-value">
                             <span class="feeling-badge">${this.escapeHtml(entry.feeling)}</span>
+                            <button type="button" class="edit-btn" title="Edit feeling">✏️</button>
                         </div>
                     </div>
                 </div>

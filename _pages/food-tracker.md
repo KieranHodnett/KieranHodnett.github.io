@@ -543,6 +543,86 @@ author_profile: false
   display: inline-block;
 }
 
+.feeling-badge.updated {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Edit functionality styles */
+.edit-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.edit-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  background: rgba(255, 105, 180, 0.1);
+}
+
+.edit-feeling-input {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid #FF69B4;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  background: white;
+  color: #333;
+  min-width: 120px;
+  margin-right: 0.5rem;
+}
+
+.edit-feeling-input:focus {
+  outline: none;
+  border-color: #98FB98;
+  box-shadow: 0 0 0 2px rgba(152, 251, 152, 0.2);
+}
+
+.edit-buttons {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.save-btn, .cancel-btn {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  background: rgba(72, 187, 120, 0.2);
+  transform: scale(1.1);
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 105, 180, 0.2);
+  transform: scale(1.1);
+}
+
+.detail-item .detail-value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
 /* Empty state */
 .empty-state {
   text-align: center;
