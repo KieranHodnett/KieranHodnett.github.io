@@ -285,18 +285,20 @@ author_profile: false
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .enjoyment-btn {
   flex: 1;
-  padding: 0.75rem;
+  min-width: 60px;
+  padding: 1rem 0.5rem;
   border: 2px solid #FFE6F2;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: 60px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -591,10 +593,14 @@ author_profile: false
   
   .enjoyment-buttons {
     flex-wrap: wrap;
+    gap: 0.25rem;
   }
   
   .enjoyment-btn {
-    min-width: 60px;
+    min-width: 50px;
+    font-size: 1.5rem;
+    min-height: 60px;
+    padding: 0.75rem 0.25rem;
   }
   
   .display-header {
@@ -633,7 +639,6 @@ author_profile: false
 <script>
 class FoodTracker {
     constructor() {
-        this.csvFile = '/files/food_data.csv';
         this.entries = [];
         this.showAllData = false;
         this.selectedEnjoyment = null;
@@ -732,24 +737,27 @@ class FoodTracker {
     }
 
     async loadData() {
-        // First try to load from localStorage
-        const localStorageData = localStorage.getItem('foodTrackerData');
-        if (localStorageData && localStorageData.trim() !== '') {
-            this.parseCSV(localStorageData);
-            this.displayEntries();
-            return;
+        // Load from localStorage
+        const savedData = localStorage.getItem('foodTrackerData');
+        if (savedData) {
+            try {
+                this.entries = JSON.parse(savedData);
+                console.log('Loaded entries from localStorage:', this.entries);
+            } catch (error) {
+                console.error('Error parsing saved data:', error);
+                this.entries = [];
+            }
+        } else {
+            // Create initial sample data
+            this.createSampleData();
         }
-
-        // If no localStorage data, create initial data with samples
-        await this.createInitialCSV();
+        
+        // Sort by timestamp, newest first
+        this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
         this.displayEntries();
     }
 
-    async createInitialCSV() {
-        const headers = ['Food you ate', 'Time of Day', 'Amount eaten', 'Enjoyment', 'How did you feel afterwards?', 'Timestamp'];
-        const csvContent = headers.join(',') + '\n';
-        
-        // Add sample data for demonstration
+    createSampleData() {
         const sampleEntries = [
             {
                 food: 'Grilled salmon with quinoa',
@@ -777,90 +785,22 @@ class FoodTracker {
             }
         ];
 
-        const sampleCSV = csvContent + sampleEntries.map(entry => 
-            `"${entry.food}","${entry.timeOfDay}","${entry.amount}","${entry.enjoyment}","${entry.feeling}","${entry.timestamp}"`
-        ).join('\n');
-        
-        console.log('Creating initial CSV with sample data:', sampleCSV);
-        localStorage.setItem('foodTrackerData', sampleCSV);
-        this.parseCSV(sampleCSV);
+        console.log('Creating sample data:', sampleEntries);
+        this.entries = sampleEntries;
+        this.saveData();
     }
 
-    parseCSV(csvText) {
-        console.log('Parsing CSV:', csvText);
-        const lines = csvText.trim().split('\n');
-        console.log('CSV lines:', lines);
-        
-        if (lines.length <= 1) {
-            console.log('Only headers or empty CSV');
-            return;
-        }
 
-        this.entries = [];
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-            const values = this.parseCSVLine(line);
-            console.log(`Line ${i} values:`, values);
-            
-            if (values.length >= 5) {
-                this.entries.push({
-                    food: values[0],
-                    timeOfDay: values[1],
-                    amount: values[2],
-                    enjoyment: values[3],
-                    feeling: values[4],
-                    timestamp: values[5] || new Date().toISOString()
-                });
-            }
-        }
-
-        console.log('Parsed entries:', this.entries);
-        // Sort by timestamp, newest first
-        this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    }
-
-    parseCSVLine(line) {
-        const result = [];
-        let current = '';
-        let inQuotes = false;
-        
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                result.push(current.trim());
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        
-        result.push(current.trim());
-        return result;
-    }
 
     async addEntry(entry) {
         this.entries.unshift(entry); // Add to beginning
-        
-        // Convert to CSV format
-        const csvLine = [
-            `"${entry.food}"`,
-            `"${entry.timeOfDay}"`,
-            `"${entry.amount}"`,
-            `"${entry.enjoyment}"`,
-            `"${entry.feeling}"`,
-            `"${entry.timestamp}"`
-        ].join(',') + '\n';
-
-        // For now, we'll use localStorage as the primary storage
-        // In the future, you can implement a simple backend to write to the CSV file
-        let existingContent = localStorage.getItem('foodTrackerData') || 'Food you ate,Time of Day,Amount eaten,Enjoyment,How did you feel afterwards?,Timestamp\n';
-        const newContent = existingContent + csvLine;
-        localStorage.setItem('foodTrackerData', newContent);
-        
+        this.saveData();
         this.displayEntries();
+    }
+
+    saveData() {
+        localStorage.setItem('foodTrackerData', JSON.stringify(this.entries));
+        console.log('Saved data to localStorage:', this.entries);
     }
 
     displayEntries() {
