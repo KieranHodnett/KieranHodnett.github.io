@@ -22,7 +22,7 @@ author_profile: false
         <span class="section-icon">⭐</span>
         <h2>Add New Entry</h2>
       </div>
-              <form id="foodForm" class="food-form" onsubmit="return false;" action="javascript:void(0);" method="post">
+      <form id="foodForm" class="food-form" onsubmit="return false;" action="javascript:void(0);" method="post">
         <div class="form-group">
           <label for="food">Food you ate</label>
           <input type="text" id="food" name="food" required placeholder="e.g., Grilled salmon with vegetables">
@@ -57,7 +57,7 @@ author_profile: false
 
         <button type="submit" class="submit-btn">
           <span>Add Entry</span>
-          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwIDJMMTEuMDkgNC4xM0wxNCA0TDEyIDZMMTQgOEwxMS4wOSA3Ljg3TDEwIDEwTDguOTEgNy44N0w2IDhMOCA2TDYgNEw4LjkxIDQuMTNMMTAgMloiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+Cg==" alt="Sparkle" class="btn-icon">
+          <span class="btn-icon">✨</span>
         </button>
       </form>
     </section>
@@ -71,7 +71,7 @@ author_profile: false
         </div>
         <button id="toggleView" class="toggle-btn">
           <span>Show All Data</span>
-          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMTJMMTIgOEw4IDQiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTIgOEg0IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==" alt="Arrow" class="btn-icon">
+          <span class="btn-icon">→</span>
         </button>
       </div>
       
@@ -83,9 +83,9 @@ author_profile: false
 
   <!-- Floating decorative elements -->
   <div class="floating-elements">
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-1">
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iIzAwRkZGRiIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-2">
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iOCIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Flower" class="floating-element flower-3">
+    <span class="floating-element flower-1">🌸</span>
+    <span class="floating-element flower-2">🌿</span>
+    <span class="floating-element flower-3">🌸</span>
   </div>
 </div>
 
@@ -382,8 +382,7 @@ author_profile: false
 }
 
 .btn-icon {
-  width: 20px;
-  height: 20px;
+  font-size: 1rem;
 }
 
 /* Display section */
@@ -575,6 +574,7 @@ author_profile: false
   position: absolute;
   opacity: 0.3;
   animation: float 6s ease-in-out infinite;
+  font-size: 1.5rem;
 }
 
 .flower-1 {
@@ -824,7 +824,7 @@ class FoodTracker {
     }
 
     async addEntry(entry) {
-        this.entries.unshift(entry); // Add to beginning
+        this.entries.unshift(entry);
         this.saveData();
         this.displayEntries();
     }
@@ -930,6 +930,4 @@ class FoodTracker {
 document.addEventListener('DOMContentLoaded', () => {
     new FoodTracker();
 });
-
-
 </script> 
