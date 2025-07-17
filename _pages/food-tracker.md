@@ -8,9 +8,9 @@ author_profile: false
 <div class="food-tracker-container">
   <header class="header">
     <div class="header-content">
-      <img src="/assets/images/monster-energy.png" alt="Monster Energy" class="header-icon energy-icon">
+      <img src="/assets/images/hd-monster-logo-sign-transparent-png-701751694778703n3cbkpxf2b.png" alt="Monster Energy" class="header-icon energy-icon">
       <h1>🍽️ Magdalena Food Tracker</h1>
-      <img src="/assets/images/bunnies-field.jpg" alt="Cute Bunnies" class="header-icon bunny-icon">
+      <img src="/assets/images/two-brown-bunnies-in-grass-daisies.jpg" alt="Cute Bunnies" class="header-icon bunny-icon">
     </div>
     <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
@@ -83,9 +83,9 @@ author_profile: false
 
   <!-- Floating decorative elements -->
   <div class="floating-elements">
-    <img src="/assets/images/bunnies-field.jpg" alt="Floating bunnies" class="floating-element flower-1">
-    <img src="/assets/images/monster-energy.png" alt="Floating energy" class="floating-element flower-2">
-    <img src="/assets/images/bunnies-field.jpg" alt="Floating bunnies" class="floating-element flower-3">
+    <img src="/assets/images/two-brown-bunnies-in-grass-daisies.jpg" alt="Floating bunnies" class="floating-element flower-1">
+    <img src="/assets/images/hd-monster-logo-sign-transparent-png-701751694778703n3cbkpxf2b.png" alt="Floating energy" class="floating-element flower-2">
+    <img src="/assets/images/two-brown-bunnies-in-grass-daisies.jpg" alt="Floating bunnies" class="floating-element flower-3">
   </div>
 </div>
 
