@@ -316,6 +316,25 @@ author_profile: false
   background: linear-gradient(135deg, #FF69B4, #98FB98);
   color: white;
   box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+  transform: scale(1.05);
+  position: relative;
+}
+
+.enjoyment-btn.selected::after {
+  content: '✓';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #FF69B4;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 /* Submit button */
@@ -682,6 +701,8 @@ class FoodTracker {
     }
 
     selectEnjoyment(event) {
+        console.log('Enjoyment button clicked:', event.target.dataset.value);
+        
         // Remove previous selection
         document.querySelectorAll('.enjoyment-btn').forEach(btn => {
             btn.classList.remove('selected');
@@ -691,6 +712,8 @@ class FoodTracker {
         event.target.classList.add('selected');
         this.selectedEnjoyment = event.target.dataset.value;
         document.getElementById('enjoyment').value = this.selectedEnjoyment;
+        
+        console.log('Selected enjoyment:', this.selectedEnjoyment);
     }
 
     async handleFormSubmit(event) {
@@ -799,8 +822,6 @@ class FoodTracker {
         this.entries = sampleEntries;
         this.saveData();
     }
-
-
 
     async addEntry(entry) {
         this.entries.unshift(entry); // Add to beginning
