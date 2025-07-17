@@ -8,9 +8,9 @@ author_profile: false
 <div class="food-tracker-container">
   <header class="header">
     <div class="header-content">
-      <img src="/assets/images/energy-icon.svg" alt="Energy" class="header-icon energy-icon">
+      <img src="/assets/images/monster-energy.png" alt="Monster Energy" class="header-icon energy-icon">
       <h1>🍽️ Magdalena Food Tracker</h1>
-      <img src="/assets/images/bunny-icon.svg" alt="Bunny" class="header-icon bunny-icon">
+      <img src="/assets/images/bunnies-field.jpg" alt="Cute Bunnies" class="header-icon bunny-icon">
     </div>
     <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
@@ -83,9 +83,9 @@ author_profile: false
 
   <!-- Floating decorative elements -->
   <div class="floating-elements">
-    <img src="/assets/images/bunny-icon.svg" alt="Floating bunny" class="floating-element flower-1">
-    <img src="/assets/images/energy-icon.svg" alt="Floating energy" class="floating-element flower-2">
-    <img src="/assets/images/bunny-icon.svg" alt="Floating bunny" class="floating-element flower-3">
+    <img src="/assets/images/bunnies-field.jpg" alt="Floating bunnies" class="floating-element flower-1">
+    <img src="/assets/images/monster-energy.png" alt="Floating energy" class="floating-element flower-2">
+    <img src="/assets/images/bunnies-field.jpg" alt="Floating bunnies" class="floating-element flower-3">
   </div>
 </div>
 
@@ -130,6 +130,8 @@ author_profile: false
 .header-icon {
   width: 2.5rem;
   height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   animation: bounce 2s infinite;
   display: inline-block;
@@ -577,6 +579,8 @@ author_profile: false
   animation: float 6s ease-in-out infinite;
   width: 1.5rem;
   height: 1.5rem;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .flower-1 {
