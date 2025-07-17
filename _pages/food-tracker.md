@@ -22,7 +22,7 @@ author_profile: false
         <span class="section-icon">⭐</span>
         <h2>Add New Entry</h2>
       </div>
-      <form id="foodForm" class="food-form">
+              <form id="foodForm" class="food-form" onsubmit="return false;" action="javascript:void(0);" method="post">
         <div class="form-group">
           <label for="food">Food you ate</label>
           <input type="text" id="food" name="food" required placeholder="e.g., Grilled salmon with vegetables">
@@ -655,7 +655,12 @@ class FoodTracker {
     setupEventListeners() {
         // Form submission
         const form = document.getElementById('foodForm');
-        form.addEventListener('submit', (e) => this.handleFormSubmit(e));
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.handleFormSubmit(e);
+            return false;
+        });
 
         // Enjoyment buttons
         const enjoymentButtons = document.querySelectorAll('.enjoyment-btn');
@@ -666,6 +671,8 @@ class FoodTracker {
         // Toggle view button
         const toggleBtn = document.getElementById('toggleView');
         toggleBtn.addEventListener('click', () => this.toggleView());
+        
+        console.log('Event listeners set up successfully');
     }
 
     setCurrentTime() {
@@ -687,6 +694,7 @@ class FoodTracker {
     }
 
     async handleFormSubmit(event) {
+        console.log('Form submission handler called');
         event.preventDefault();
 
         // Validate enjoyment selection
@@ -704,6 +712,8 @@ class FoodTracker {
             feeling: formData.get('feeling'),
             timestamp: new Date().toISOString()
         };
+
+        console.log('Form data collected:', entry);
 
         try {
             await this.addEntry(entry);
