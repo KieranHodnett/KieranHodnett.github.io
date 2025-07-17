@@ -556,28 +556,29 @@ author_profile: false
 
 /* Edit functionality styles */
 .edit-btn {
-  background: rgba(255, 105, 180, 0.1);
-  border: 2px solid #FF69B4;
-  font-size: 1.2rem;
+  background: rgba(255, 105, 180, 0.05);
+  border: 1px solid rgba(255, 105, 180, 0.3);
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-left: 0.5rem;
-  padding: 0.5rem;
+  margin-left: 0.25rem;
+  padding: 0.25rem;
   border-radius: 50%;
   transition: all 0.3s ease;
-  opacity: 0.8;
+  opacity: 0.6;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: 24px;
+  min-height: 24px;
+  color: #FF69B4;
 }
 
 .edit-btn:hover {
   opacity: 1;
-  transform: scale(1.1);
-  background: rgba(255, 105, 180, 0.2);
-  border-color: #98FB98;
-  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+  transform: scale(1.05);
+  background: rgba(255, 105, 180, 0.15);
+  border-color: #FF69B4;
+  box-shadow: 0 1px 4px rgba(255, 105, 180, 0.2);
 }
 
 .edit-feeling-input {

@@ -254,20 +254,25 @@ class FoodTracker {
     setupEditEventListeners() {
         // Use event delegation for dynamically created buttons
         document.addEventListener('click', (e) => {
+            console.log('Click detected on:', e.target.className);
+            
             // Edit buttons
             if (e.target.classList.contains('edit-btn')) {
+                console.log('Edit button clicked');
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.startEditing(entryId);
             }
             
             // Save buttons
             if (e.target.classList.contains('save-btn')) {
+                console.log('Save button clicked');
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.saveEdit(entryId);
             }
             
             // Cancel buttons
             if (e.target.classList.contains('cancel-btn')) {
+                console.log('Cancel button clicked');
                 const entryId = e.target.closest('.entry-card').dataset.entryId;
                 this.cancelEdit(entryId);
             }
@@ -286,10 +291,21 @@ class FoodTracker {
         feelingElement.innerHTML = `
             <input type="text" class="edit-feeling-input" value="${this.escapeHtml(originalFeeling)}" placeholder="How did you feel?">
             <div class="edit-buttons">
-                <button type="button" class="save-btn">💾</button>
-                <button type="button" class="cancel-btn">❌</button>
+                <button type="button" class="save-btn" data-entry-id="${entryId}">💾</button>
+                <button type="button" class="cancel-btn" data-entry-id="${entryId}">❌</button>
             </div>
         `;
+
+        // Add direct event listeners to the new buttons
+        const saveBtn = feelingElement.querySelector('.save-btn');
+        const cancelBtn = feelingElement.querySelector('.cancel-btn');
+        
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => this.saveEdit(entryId));
+        }
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => this.cancelEdit(entryId));
+        }
 
         // Focus on input
         const input = feelingElement.querySelector('.edit-feeling-input');
