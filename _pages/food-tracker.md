@@ -8,9 +8,9 @@ author_profile: false
 <div class="food-tracker-container">
   <header class="header">
     <div class="header-content">
-      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik04IDEySDMyVjE2SDhWMTJaIiBmaWxsPSIjMDA5OTAwIi8+CjxwYXRoIGQ9Ik04IDE4SDMyVjIySDhWMThaIiBmaWxsPSIjMDA5OTAwIi8+CjxwYXRoIGQ9Ik04IDI0SDMyVjI4SDhWMjRaIiBmaWxsPSIjMDA5OTAwIi8+Cjwvc3ZnPgo=" alt="Energy" class="header-icon energy-icon">
+      <img src="/assets/images/energy-icon.svg" alt="Energy" class="header-icon energy-icon">
       <h1>🍽️ Magdalena Food Tracker</h1>
-      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTgiIGZpbGw9IiNGRkYwRjAiLz4KPGNpcmNsZSBjeD0iMTUiIGN5PSIxNSIgcj0iMiIgZmlsbD0iIzAwMCIvPgo8Y2lyY2xlIGN4PSIyNSIgY3k9IjE1IiByPSIyIiBmaWxsPSIjMDAwIi8+CjxwYXRoIGQ9Ik0xNSAyNUMxNSAyNSAxOCAyOCAyMCAyOEMyMiAyOCAyNSAyNSAyNSAyNSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwIDEwQzEwIDEwIDEyIDggMTUgOEMxOCA4IDIwIDEwIDIwIDEwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNMjAgMTBDMjAgMTAgMjIgOCAyNSA4QzI4IDggMzAgMTAgMzAgMTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPgo=" alt="Bunny" class="header-icon bunny-icon">
+      <img src="/assets/images/bunny-icon.svg" alt="Bunny" class="header-icon bunny-icon">
     </div>
     <p class="subtitle">Track your meals and how they make you feel ✨</p>
   </header>
@@ -19,7 +19,7 @@ author_profile: false
     <!-- Add Entry Form -->
     <section class="form-section">
       <div class="section-header">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDkuNzRMMTIgMTZMMTAuOTEgOS43NEw0IDlMMTAuOTEgOC4yNkwxMiAyWiIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Star" class="section-icon">
+        <img src="/assets/images/star-icon.svg" alt="Star" class="section-icon">
         <h2>Add New Entry</h2>
       </div>
       <form id="foodForm" class="food-form">
@@ -66,7 +66,7 @@ author_profile: false
     <section class="display-section">
       <div class="display-header">
         <div class="section-header">
-          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDkuNzRMMTIgMTZMMTAuOTEgOS43NEw0IDlMMTAuOTEgOC4yNkwxMiAyWiIgZmlsbD0iI0ZGRjBGMCIvPgo8L3N2Zz4K" alt="Star" class="section-icon">
+          <img src="/assets/images/star-icon.svg" alt="Star" class="section-icon">
           <h2>Recent Entries</h2>
         </div>
         <button id="toggleView" class="toggle-btn">
@@ -732,11 +732,22 @@ class FoodTracker {
     }
 
     async loadData() {
+        // First try to load from localStorage
+        const localStorageData = localStorage.getItem('foodTrackerData');
+        if (localStorageData) {
+            this.parseCSV(localStorageData);
+            this.displayEntries();
+            return;
+        }
+
+        // If no localStorage data, try to load from CSV file
         try {
             const response = await fetch(this.csvFile);
             if (response.ok) {
                 const csvText = await response.text();
                 this.parseCSV(csvText);
+                // Save to localStorage for future use
+                localStorage.setItem('foodTrackerData', csvText);
             } else {
                 // Create new CSV file if it doesn't exist
                 await this.createInitialCSV();
@@ -752,8 +763,40 @@ class FoodTracker {
         const headers = ['Food you ate', 'Time of Day', 'Amount eaten', 'Enjoyment', 'How did you feel afterwards?', 'Timestamp'];
         const csvContent = headers.join(',') + '\n';
         
-        // For now, we'll just use localStorage as fallback
-        localStorage.setItem('foodTrackerData', csvContent);
+        // Add sample data for demonstration
+        const sampleEntries = [
+            {
+                food: 'Grilled salmon with quinoa',
+                timeOfDay: '12:30',
+                amount: '1 fillet with 1/2 cup quinoa',
+                enjoyment: '75',
+                feeling: 'Energized and satisfied',
+                timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                food: 'Greek yogurt with berries',
+                timeOfDay: '09:15',
+                amount: '1 cup with 1/4 cup mixed berries',
+                enjoyment: '100',
+                feeling: 'Light and refreshed',
+                timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                food: 'Chicken stir-fry',
+                timeOfDay: '19:45',
+                amount: '1 bowl with vegetables',
+                enjoyment: '50',
+                feeling: 'A bit heavy',
+                timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+            }
+        ];
+
+        const sampleCSV = csvContent + sampleEntries.map(entry => 
+            `"${entry.food}","${entry.timeOfDay}","${entry.amount}","${entry.enjoyment}","${entry.feeling}","${entry.timestamp}"`
+        ).join('\n');
+        
+        localStorage.setItem('foodTrackerData', sampleCSV);
+        this.parseCSV(sampleCSV);
     }
 
     parseCSV(csvText) {
@@ -922,47 +965,5 @@ document.addEventListener('DOMContentLoaded', () => {
     new FoodTracker();
 });
 
-// Add some sample data for demonstration
-function addSampleData() {
-    const sampleEntries = [
-        {
-            food: 'Grilled salmon with quinoa',
-            timeOfDay: '12:30',
-            amount: '1 fillet with 1/2 cup quinoa',
-            enjoyment: '75',
-            feeling: 'Energized and satisfied',
-            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-        },
-        {
-            food: 'Greek yogurt with berries',
-            timeOfDay: '09:15',
-            amount: '1 cup with 1/4 cup mixed berries',
-            enjoyment: '100',
-            feeling: 'Light and refreshed',
-            timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
-        },
-        {
-            food: 'Chicken stir-fry',
-            timeOfDay: '19:45',
-            amount: '1 bowl with vegetables',
-            enjoyment: '50',
-            feeling: 'A bit heavy',
-            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
-        }
-    ];
 
-    // Store sample data in localStorage for demo purposes
-    const csvContent = 'Food you ate,Time of Day,Amount eaten,Enjoyment,How did you feel afterwards?,Timestamp\n' +
-        sampleEntries.map(entry => 
-            `"${entry.food}","${entry.timeOfDay}","${entry.amount}","${entry.enjoyment}","${entry.feeling}","${entry.timestamp}"`
-        ).join('\n');
-    
-    localStorage.setItem('foodTrackerData', csvContent);
-    console.log('Sample data added for demonstration');
-}
-
-// Add sample data on first load (for demo purposes)
-if (!localStorage.getItem('foodTrackerData')) {
-    addSampleData();
-}
 </script> 
