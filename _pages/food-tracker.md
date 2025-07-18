@@ -824,7 +824,8 @@ author_profile: false
       windowDb: !!window.db
     });
     console.log('🔄 Falling back to localStorage only');
-
+  }
+</script>
 
 <!-- Food Tracker Application -->
 <script src="/assets/js/food-tracker.js"></script> 
