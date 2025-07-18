@@ -767,9 +767,6 @@ author_profile: false
 
 <script>
 console.log('Firebase script starting...');
-console.log('User agent:', navigator.userAgent);
-
-// Simple Firebase initialization for Firefox compatibility
 try {
   var firebaseConfig = {
     apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
@@ -785,10 +782,9 @@ try {
   firebase.analytics();
   var db = firebase.firestore();
   window.db = db;
-  console.log('Firebase initialized successfully in Firefox');
+  console.log('Firebase initialized successfully');
 } catch (error) {
   console.error('Firebase initialization failed:', error);
-  window.db = null;
 }
 </script>
 

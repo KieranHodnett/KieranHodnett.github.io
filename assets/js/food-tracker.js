@@ -5,18 +5,9 @@ class FoodTracker {
         this.showAllData = false;
         this.editingEntryId = null;
         this.unsubscribe = null;
-        this.firebaseRetryCount = 0;
-        this.maxFirebaseRetries = 5;
-        this.firebaseTimeout = null;
         
         console.log('Food Tracker: Constructor called');
         this.initializeApp();
-        
-        // Set a hard timeout to prevent infinite loops
-        this.firebaseTimeout = setTimeout(() => {
-            console.log('Firebase timeout reached, forcing localStorage fallback');
-            this.loadFromLocalStorage();
-        }, 10000); // 10 second timeout
     }
 
     initializeApp() {
@@ -172,41 +163,13 @@ class FoodTracker {
             console.log('Loading data from Firebase...');
             
             // Check if Firebase is available
-            console.log('Checking Firebase availability:', {
-                windowDb: !!window.db,
-                dbType: typeof window.db,
-                hasCollection: window.db && typeof window.db.collection === 'function',
-                userAgent: navigator.userAgent
-            });
-            
-            // For Firefox, be more patient with Firebase loading
-            if (!window.db || typeof window.db.collection !== 'function') {
-                if (navigator.userAgent.includes('Firefox') && this.firebaseRetryCount < this.maxFirebaseRetries) {
-                    this.firebaseRetryCount++;
-                    console.log(`Firefox detected - Firebase not ready, waiting... (attempt ${this.firebaseRetryCount}/${this.maxFirebaseRetries})`);
-                    setTimeout(() => this.loadData(), 1000);
-                    return;
-                } else {
-                    console.log('Firebase not available or max retries reached, using localStorage fallback');
-                    // Clear the timeout since we're falling back
-                    if (this.firebaseTimeout) {
-                        clearTimeout(this.firebaseTimeout);
-                        this.firebaseTimeout = null;
-                    }
-                    this.loadFromLocalStorage();
-                    return;
-                }
+            if (!window.db) {
+                console.log('Firebase not available, using localStorage fallback');
+                this.loadFromLocalStorage();
+                return;
             }
             
             // Set up real-time listener using Firebase v8 API
-            console.log('Setting up Firebase listener with db:', window.db);
-            
-            // Clear the timeout since Firebase is working
-            if (this.firebaseTimeout) {
-                clearTimeout(this.firebaseTimeout);
-                this.firebaseTimeout = null;
-            }
-            
             const q = window.db.collection('food_entries').orderBy('timestamp', 'desc');
             
             this.unsubscribe = q.onSnapshot((snapshot) => {
@@ -525,25 +488,16 @@ class FoodTracker {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Food Tracker: DOM loaded, initializing...');
     
-    // Give Firebase a moment to initialize - longer delay for Firefox
+    // Give Firebase a moment to initialize
     setTimeout(() => {
         console.log('🔄 Starting Food Tracker initialization...');
         console.log('🔍 Checking Firebase availability:', {
             windowDb: !!window.db,
-            firebaseAvailable: typeof window.db !== 'undefined',
-            userAgent: navigator.userAgent
+            firebaseAvailable: typeof window.db !== 'undefined'
         });
         
-        // Additional check for Firefox
-        if (navigator.userAgent.includes('Firefox')) {
-            console.log('Firefox detected, using additional delay');
-            setTimeout(() => {
-                window.foodTracker = new FoodTracker();
-            }, 500);
-        } else {
-            window.foodTracker = new FoodTracker();
-        }
-    }, 1500); // Increased wait time for Firebase to initialize
+        window.foodTracker = new FoodTracker();
+    }, 1000); // Wait 1 second for Firebase to initialize
 });
 
 // Cleanup when page unloads
