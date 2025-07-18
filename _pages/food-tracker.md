@@ -764,15 +764,23 @@ author_profile: false
 <script type="module">
   console.log('🚀 Firebase script starting...');
   
-  // Import the functions you need from the SDKs you need
-  console.log('📦 Importing Firebase modules...');
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-  
-  console.log('✅ Firebase modules imported successfully');
+  // Use dynamic imports to handle potential failures
+  console.log('📦 Loading Firebase modules...');
   
   try {
+    // Dynamic imports with await
+    const firebaseApp = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js");
+    const firebaseFirestore = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+    const firebaseAnalytics = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js");
+    
+    console.log('✅ Firebase modules loaded successfully');
+    
+    const { initializeApp } = firebaseApp;
+    const { getFirestore } = firebaseFirestore;
+    const { getAnalytics } = firebaseAnalytics;
+    
+    console.log('✅ Firebase functions extracted');
+    
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
@@ -815,8 +823,8 @@ author_profile: false
       stack: error.stack,
       windowDb: !!window.db
     });
-  }
-</script>
+    console.log('🔄 Falling back to localStorage only');
+
 
 <!-- Food Tracker Application -->
 <script src="/assets/js/food-tracker.js"></script> 
