@@ -177,28 +177,85 @@ class FoodTracker {
         try {
             console.log('Loading data from Firebase...');
             
+            // Check if Firebase is available
+            if (!window.db) {
+                console.log('Firebase not available, using localStorage fallback');
+                this.loadFromLocalStorage();
+                return;
+            }
+            
+            // Import Firebase functions dynamically
+            const { collection, query, orderBy, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            
             // Set up real-time listener
-            this.unsubscribe = db.collection('food_entries')
-                .orderBy('timestamp', 'desc')
-                .onSnapshot((snapshot) => {
-                    this.entries = [];
-                    snapshot.forEach((doc) => {
-                        const entry = { id: doc.id, ...doc.data() };
-                        this.entries.push(entry);
-                    });
-                    
-                    console.log('Loaded entries from Firebase:', this.entries);
-                    this.displayEntries();
-                }, (error) => {
-                    console.error('Error loading data:', error);
-                    // Fallback to sample data if Firebase fails
-                    this.createSampleData();
+            const q = query(collection(window.db, 'food_entries'), orderBy('timestamp', 'desc'));
+            
+            this.unsubscribe = onSnapshot(q, (snapshot) => {
+                this.entries = [];
+                snapshot.forEach((doc) => {
+                    const entry = { id: doc.id, ...doc.data() };
+                    this.entries.push(entry);
                 });
+                
+                console.log('Loaded entries from Firebase:', this.entries);
+                this.displayEntries();
+            }, (error) => {
+                console.error('Error loading data:', error);
+                // Fallback to localStorage if Firebase fails
+                this.loadFromLocalStorage();
+            });
                 
         } catch (error) {
             console.error('Error setting up Firebase listener:', error);
+            this.loadFromLocalStorage();
+        }
+    }
+
+    loadFromLocalStorage() {
+        // Fallback to localStorage
+        const savedData = localStorage.getItem('foodTrackerData');
+        if (savedData) {
+            try {
+                this.entries = JSON.parse(savedData);
+                console.log('Loaded entries from localStorage:', this.entries);
+                this.migrateEntries();
+            } catch (error) {
+                console.error('Error parsing saved data:', error);
+                this.entries = [];
+            }
+        } else {
+            // Create initial sample data
             this.createSampleData();
         }
+
+        // Sort by timestamp, newest first
+        this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        this.displayEntries();
+    }
+
+    migrateEntries() {
+        let needsMigration = false;
+
+        this.entries.forEach((entry, index) => {
+            if (!entry.id) {
+                entry.id = this.generateId();
+                needsMigration = true;
+                console.log(`Added ID to entry ${index}:`, entry.id);
+            }
+        });
+
+        if (needsMigration) {
+            console.log('Migrating entries to include IDs');
+            this.saveToLocalStorage();
+            console.log('Migration completed. All entries now have IDs.');
+        } else {
+            console.log('All entries already have IDs');
+        }
+
+        // Log all entries with their IDs for debugging
+        this.entries.forEach((entry, index) => {
+            console.log(`Entry ${index}:`, { id: entry.id, food: entry.food, feeling: entry.feeling });
+        });
     }
 
     createSampleData() {
@@ -234,32 +291,75 @@ class FoodTracker {
 
         console.log('Creating sample data:', sampleEntries);
         this.entries = sampleEntries;
-        this.displayEntries();
+        this.saveToLocalStorage();
     }
 
     async addEntry(entry) {
         try {
             console.log('Adding entry to Firebase:', entry);
-            const docRef = await db.collection('food_entries').add(entry);
+            
+            // Check if Firebase is available
+            if (!window.db) {
+                console.log('Firebase not available, saving to localStorage');
+                this.entries.unshift(entry);
+                this.saveToLocalStorage();
+                this.displayEntries();
+                return;
+            }
+            
+            // Import Firebase functions dynamically
+            const { collection, addDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            
+            const docRef = await addDoc(collection(window.db, 'food_entries'), entry);
             console.log('Entry added with ID:', docRef.id);
             // Note: We don't need to manually update this.entries or displayEntries()
             // because the real-time listener will handle that automatically
         } catch (error) {
             console.error('Error adding entry to Firebase:', error);
-            throw error;
+            // Fallback to localStorage
+            this.entries.unshift(entry);
+            this.saveToLocalStorage();
+            this.displayEntries();
         }
     }
 
     async updateEntry(entryId, updatedData) {
         try {
             console.log('Updating entry in Firebase:', entryId, updatedData);
-            await db.collection('food_entries').doc(entryId).update(updatedData);
+            
+            // Check if Firebase is available
+            if (!window.db) {
+                console.log('Firebase not available, updating localStorage');
+                const entry = this.entries.find(e => e.id === entryId);
+                if (entry) {
+                    Object.assign(entry, updatedData);
+                    this.saveToLocalStorage();
+                    this.displayEntries();
+                }
+                return;
+            }
+            
+            // Import Firebase functions dynamically
+            const { doc, updateDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            
+            await updateDoc(doc(window.db, 'food_entries', entryId), updatedData);
             console.log('Entry updated successfully');
             // Real-time listener will handle the UI update
         } catch (error) {
             console.error('Error updating entry in Firebase:', error);
-            throw error;
+            // Fallback to localStorage
+            const entry = this.entries.find(e => e.id === entryId);
+            if (entry) {
+                Object.assign(entry, updatedData);
+                this.saveToLocalStorage();
+                this.displayEntries();
+            }
         }
+    }
+
+    saveToLocalStorage() {
+        localStorage.setItem('foodTrackerData', JSON.stringify(this.entries));
+        console.log('Saved data to localStorage:', this.entries);
     }
 
     displayEntries() {

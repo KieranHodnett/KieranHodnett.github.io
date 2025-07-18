@@ -760,12 +760,32 @@ author_profile: false
 }
 </style>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+<!-- Firebase SDK (Modern v9) -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
+    authDomain: "magdalena-food-tracker.firebaseapp.com",
+    projectId: "magdalena-food-tracker",
+    storageBucket: "magdalena-food-tracker.firebasestorage.app",
+    messagingSenderId: "208918807918",
+    appId: "1:208918807918:web:0111206b4b854b908ead7f",
+    measurementId: "G-93YXWD4JRL"
+  };
 
-<!-- Firebase Configuration -->
-<script src="/assets/js/firebase-config.js"></script>
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  
+  // Initialize Firestore
+  const db = getFirestore(app);
+  
+  // Make db available globally for the food tracker
+  window.db = db;
+</script>
 
 <!-- Food Tracker Application -->
 <script src="/assets/js/food-tracker.js"></script> 
