@@ -41,11 +41,11 @@ author_profile: false
         <div class="form-group">
           <label>Enjoyment</label>
           <div class="enjoyment-buttons">
-            <button type="button" class="enjoyment-btn" data-enjoyment="0">😞</button>
-            <button type="button" class="enjoyment-btn" data-enjoyment="25">😐</button>
-            <button type="button" class="enjoyment-btn" data-enjoyment="50">😊</button>
-            <button type="button" class="enjoyment-btn" data-enjoyment="75">😄</button>
-            <button type="button" class="enjoyment-btn" data-enjoyment="100">🤩</button>
+            <button type="button" class="enjoyment-btn" data-value="0">😞</button>
+            <button type="button" class="enjoyment-btn" data-value="25">😐</button>
+            <button type="button" class="enjoyment-btn" data-value="50">😊</button>
+            <button type="button" class="enjoyment-btn" data-value="75">😄</button>
+            <button type="button" class="enjoyment-btn" data-value="100">🤩</button>
           </div>
           <input type="hidden" id="enjoyment" name="enjoyment" required>
         </div>

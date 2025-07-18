@@ -82,7 +82,7 @@ class FoodTracker {
         event.target.classList.add('active');
         
         // Store selected enjoyment
-        this.selectedEnjoyment = event.target.dataset.enjoyment;
+        this.selectedEnjoyment = event.target.dataset.value;
         console.log('Selected enjoyment:', this.selectedEnjoyment);
     }
 
@@ -95,6 +95,15 @@ class FoodTracker {
         const timeOfDay = formData.get('timeOfDay');
         const amount = formData.get('amount');
         const feeling = formData.get('feeling');
+        
+        console.log('Form validation check:', {
+            food: !!food,
+            timeOfDay: !!timeOfDay,
+            amount: !!amount,
+            feeling: !!feeling,
+            selectedEnjoyment: !!this.selectedEnjoyment,
+            selectedEnjoymentValue: this.selectedEnjoyment
+        });
         
         // Validate required fields
         if (!food || !timeOfDay || !amount || !feeling || !this.selectedEnjoyment) {
