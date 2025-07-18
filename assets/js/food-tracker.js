@@ -5,6 +5,8 @@ class FoodTracker {
         this.showAllData = false;
         this.editingEntryId = null;
         this.unsubscribe = null;
+        this.firebaseRetryCount = 0;
+        this.maxFirebaseRetries = 5;
         
         console.log('Food Tracker: Constructor called');
         this.initializeApp();
@@ -172,12 +174,13 @@ class FoodTracker {
             
             // For Firefox, be more patient with Firebase loading
             if (!window.db || typeof window.db.collection !== 'function') {
-                if (navigator.userAgent.includes('Firefox')) {
-                    console.log('Firefox detected - Firebase not ready, waiting...');
+                if (navigator.userAgent.includes('Firefox') && this.firebaseRetryCount < this.maxFirebaseRetries) {
+                    this.firebaseRetryCount++;
+                    console.log(`Firefox detected - Firebase not ready, waiting... (attempt ${this.firebaseRetryCount}/${this.maxFirebaseRetries})`);
                     setTimeout(() => this.loadData(), 1000);
                     return;
                 } else {
-                    console.log('Firebase not available or invalid, using localStorage fallback');
+                    console.log('Firebase not available or max retries reached, using localStorage fallback');
                     this.loadFromLocalStorage();
                     return;
                 }
