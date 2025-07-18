@@ -41,11 +41,11 @@ author_profile: false
         <div class="form-group">
           <label>Enjoyment</label>
           <div class="enjoyment-buttons">
-            <button type="button" class="enjoyment-btn" data-value="0">😞</button>
-            <button type="button" class="enjoyment-btn" data-value="25">😐</button>
-            <button type="button" class="enjoyment-btn" data-value="50">😊</button>
-            <button type="button" class="enjoyment-btn" data-value="75">😄</button>
-            <button type="button" class="enjoyment-btn" data-value="100">🤩</button>
+            <button type="button" class="enjoyment-btn" data-enjoyment="0">😞</button>
+            <button type="button" class="enjoyment-btn" data-enjoyment="25">😐</button>
+            <button type="button" class="enjoyment-btn" data-enjoyment="50">😊</button>
+            <button type="button" class="enjoyment-btn" data-enjoyment="75">😄</button>
+            <button type="button" class="enjoyment-btn" data-enjoyment="100">🤩</button>
           </div>
           <input type="hidden" id="enjoyment" name="enjoyment" required>
         </div>
@@ -744,9 +744,28 @@ author_profile: false
   }
 }
 
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
 .entry-card {
   animation: slideIn 0.3s ease-out;
 }
 </style>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+<!-- Firebase Configuration -->
+<script src="/assets/js/firebase-config.js"></script>
+
+<!-- Food Tracker Application -->
 <script src="/assets/js/food-tracker.js"></script> 

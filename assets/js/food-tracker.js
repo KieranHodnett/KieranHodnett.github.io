@@ -4,7 +4,8 @@ class FoodTracker {
         this.showAllData = false;
         this.selectedEnjoyment = null;
         this.editingEntryId = null;
-        
+        this.unsubscribe = null; // For real-time listener
+
         this.initializeApp();
     }
 
@@ -37,62 +38,82 @@ class FoodTracker {
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => this.toggleView());
         }
-        
+
+        // Event delegation for edit buttons
+        document.addEventListener('click', (e) => {
+            console.log('Click detected on element:', e.target.tagName, e.target.className);
+            
+            if (e.target.classList.contains('edit-btn')) {
+                console.log('Edit button clicked!');
+                const entryCard = e.target.closest('.entry-card');
+                if (entryCard) {
+                    const entryId = entryCard.dataset.entryId;
+                    console.log('Entry ID:', entryId);
+                    if (entryId) {
+                        this.startEditing(entryId);
+                    } else {
+                        console.error('No entry ID found on card');
+                    }
+                } else {
+                    console.error('No entry card found');
+                }
+            }
+        });
+
         console.log('Event listeners set up successfully');
     }
 
     setCurrentTime() {
+        const now = new Date();
+        const timeString = now.toTimeString().slice(0, 5);
         const timeInput = document.getElementById('timeOfDay');
         if (timeInput) {
-            const now = new Date();
-            const timeString = now.toTimeString().slice(0, 5);
             timeInput.value = timeString;
         }
     }
 
     selectEnjoyment(event) {
-        console.log('Enjoyment button clicked:', event.target.dataset.value);
-        
-        // Remove previous selection
+        // Remove active class from all buttons
         document.querySelectorAll('.enjoyment-btn').forEach(btn => {
-            btn.classList.remove('selected');
+            btn.classList.remove('active');
         });
-
-        // Add selection to clicked button
-        event.target.classList.add('selected');
-        this.selectedEnjoyment = event.target.dataset.value;
         
-        const enjoymentInput = document.getElementById('enjoyment');
-        if (enjoymentInput) {
-            enjoymentInput.value = this.selectedEnjoyment;
-        }
+        // Add active class to clicked button
+        event.target.classList.add('active');
         
+        // Store selected enjoyment
+        this.selectedEnjoyment = event.target.dataset.enjoyment;
         console.log('Selected enjoyment:', this.selectedEnjoyment);
     }
 
     async handleFormSubmit(event) {
-        console.log('Form submission handler called');
         event.preventDefault();
-
-        // Validate enjoyment selection
-        if (!this.selectedEnjoyment) {
-            alert('Please select your enjoyment level');
+        
+        // Get form data
+        const formData = new FormData(event.target);
+        const food = formData.get('food');
+        const timeOfDay = formData.get('timeOfDay');
+        const amount = formData.get('amount');
+        const feeling = formData.get('feeling');
+        
+        // Validate required fields
+        if (!food || !timeOfDay || !amount || !feeling || !this.selectedEnjoyment) {
+            alert('Please fill in all fields and select an enjoyment level.');
             return;
         }
-
-        const formData = new FormData(event.target);
+        
+        // Create entry object
         const entry = {
-            id: this.generateId(),
-            food: formData.get('food'),
-            timeOfDay: formData.get('timeOfDay'),
-            amount: formData.get('amount'),
-            enjoyment: formData.get('enjoyment'),
-            feeling: formData.get('feeling'),
+            food: food.trim(),
+            timeOfDay: timeOfDay,
+            amount: amount.trim(),
+            enjoyment: this.selectedEnjoyment,
+            feeling: feeling.trim(),
             timestamp: new Date().toISOString()
         };
-
-        console.log('Form data collected:', entry);
-
+        
+        console.log('Adding entry:', entry);
+        
         try {
             await this.addEntry(entry);
             this.clearForm();
@@ -104,7 +125,7 @@ class FoodTracker {
     }
 
     generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        return Math.random().toString(36).substr(2, 9);
     }
 
     clearForm() {
@@ -113,67 +134,70 @@ class FoodTracker {
             form.reset();
         }
         
-        document.querySelectorAll('.enjoyment-btn').forEach(btn => {
-            btn.classList.remove('selected');
-        });
+        // Clear enjoyment selection
         this.selectedEnjoyment = null;
+        document.querySelectorAll('.enjoyment-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Reset time to current time
         this.setCurrentTime();
     }
 
     showSuccessMessage() {
-        const submitBtn = document.querySelector('.submit-btn');
-        if (submitBtn) {
-            const span = submitBtn.querySelector('span');
-            if (span) {
-                const originalText = span.textContent;
-                span.textContent = '✓ Added!';
-                submitBtn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
-                
-                setTimeout(() => {
-                    span.textContent = originalText;
-                    submitBtn.style.background = 'linear-gradient(135deg, #FF69B4 0%, #98FB98 100%)';
-                }, 2000);
-            }
-        }
+        const message = document.createElement('div');
+        message.className = 'success-message';
+        message.textContent = 'Entry added successfully! ✨';
+        message.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FF69B4, #98FB98);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.parentNode.removeChild(message);
+                }
+            }, 300);
+        }, 2000);
     }
 
     async loadData() {
-        // Load from localStorage
-        const savedData = localStorage.getItem('foodTrackerData');
-        if (savedData) {
-            try {
-                this.entries = JSON.parse(savedData);
-                console.log('Loaded entries from localStorage:', this.entries);
+        try {
+            console.log('Loading data from Firebase...');
+            
+            // Set up real-time listener
+            this.unsubscribe = db.collection('food_entries')
+                .orderBy('timestamp', 'desc')
+                .onSnapshot((snapshot) => {
+                    this.entries = [];
+                    snapshot.forEach((doc) => {
+                        const entry = { id: doc.id, ...doc.data() };
+                        this.entries.push(entry);
+                    });
+                    
+                    console.log('Loaded entries from Firebase:', this.entries);
+                    this.displayEntries();
+                }, (error) => {
+                    console.error('Error loading data:', error);
+                    // Fallback to sample data if Firebase fails
+                    this.createSampleData();
+                });
                 
-                // Migrate existing entries to have IDs if they don't
-                this.migrateEntries();
-            } catch (error) {
-                console.error('Error parsing saved data:', error);
-                this.entries = [];
-            }
-        } else {
-            // Create initial sample data
+        } catch (error) {
+            console.error('Error setting up Firebase listener:', error);
             this.createSampleData();
-        }
-        
-        // Sort by timestamp, newest first
-        this.entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        this.displayEntries();
-    }
-
-    migrateEntries() {
-        let needsMigration = false;
-        
-        this.entries.forEach(entry => {
-            if (!entry.id) {
-                entry.id = this.generateId();
-                needsMigration = true;
-            }
-        });
-        
-        if (needsMigration) {
-            console.log('Migrating entries to include IDs');
-            this.saveData();
         }
     }
 
@@ -210,18 +234,32 @@ class FoodTracker {
 
         console.log('Creating sample data:', sampleEntries);
         this.entries = sampleEntries;
-        this.saveData();
-    }
-
-    async addEntry(entry) {
-        this.entries.unshift(entry);
-        this.saveData();
         this.displayEntries();
     }
 
-    saveData() {
-        localStorage.setItem('foodTrackerData', JSON.stringify(this.entries));
-        console.log('Saved data to localStorage:', this.entries);
+    async addEntry(entry) {
+        try {
+            console.log('Adding entry to Firebase:', entry);
+            const docRef = await db.collection('food_entries').add(entry);
+            console.log('Entry added with ID:', docRef.id);
+            // Note: We don't need to manually update this.entries or displayEntries()
+            // because the real-time listener will handle that automatically
+        } catch (error) {
+            console.error('Error adding entry to Firebase:', error);
+            throw error;
+        }
+    }
+
+    async updateEntry(entryId, updatedData) {
+        try {
+            console.log('Updating entry in Firebase:', entryId, updatedData);
+            await db.collection('food_entries').doc(entryId).update(updatedData);
+            console.log('Entry updated successfully');
+            // Real-time listener will handle the UI update
+        } catch (error) {
+            console.error('Error updating entry in Firebase:', error);
+            throw error;
+        }
     }
 
     displayEntries() {
@@ -243,58 +281,10 @@ class FoodTracker {
         console.log('Displaying entries:', entriesToShow);
         container.innerHTML = entriesToShow.map(entry => this.createEntryCard(entry)).join('');
         
-        // Add event listeners for edit buttons
-        this.setupEditEventListeners();
-        
         // Debug: Check if edit buttons are present
         const editButtons = document.querySelectorAll('.edit-btn');
         console.log('Found edit buttons:', editButtons.length);
     }
-
-    setupEditEventListeners() {
-        // Simple event delegation for edit buttons only
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('edit-btn')) {
-                console.log('Edit button clicked!');
-                const entryId = e.target.closest('.entry-card').dataset.entryId;
-                console.log('Entry ID:', entryId);
-                this.startEditing(entryId);
-            }
-        });
-    }
-
-    startEditing(entryId) {
-        console.log('Starting edit for entry:', entryId);
-        this.editingEntryId = entryId;
-        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
-        if (!entryCard) {
-            console.error('Entry card not found');
-            return;
-        }
-
-        const entry = this.entries.find(e => e.id === entryId);
-        if (!entry) {
-            console.error('Entry not found in data');
-            return;
-        }
-
-        // Simple prompt approach - much more reliable
-        const newFeeling = prompt('Edit your feeling:', entry.feeling);
-        
-        if (newFeeling !== null && newFeeling.trim() !== '') {
-            console.log('Saving new feeling:', newFeeling);
-            entry.feeling = newFeeling.trim();
-            this.saveData();
-            this.displayEntries(); // Refresh the display
-            console.log('Feeling updated successfully');
-        } else {
-            console.log('Edit cancelled or empty feeling');
-        }
-        
-        this.editingEntryId = null;
-    }
-
-
 
     createEntryCard(entry) {
         const enjoymentEmoji = this.getEnjoymentEmoji(entry.enjoyment);
@@ -375,10 +365,58 @@ class FoodTracker {
         }
         this.displayEntries();
     }
+
+    async startEditing(entryId) {
+        console.log('Starting edit for entry:', entryId);
+        this.editingEntryId = entryId;
+        const entryCard = document.querySelector(`[data-entry-id="${entryId}"]`);
+        if (!entryCard) {
+            console.error('Entry card not found');
+            return;
+        }
+
+        const entry = this.entries.find(e => e.id === entryId);
+        if (!entry) {
+            console.error('Entry not found in data');
+            return;
+        }
+
+        // Simple prompt approach - much more reliable
+        const newFeeling = prompt('Edit your feeling:', entry.feeling);
+        
+        if (newFeeling !== null && newFeeling.trim() !== '') {
+            console.log('Saving new feeling:', newFeeling);
+            try {
+                await this.updateEntry(entryId, { feeling: newFeeling.trim() });
+                console.log('Feeling updated successfully');
+            } catch (error) {
+                console.error('Error updating feeling:', error);
+                alert('Error updating feeling. Please try again.');
+            }
+        } else {
+            console.log('Edit cancelled or empty feeling');
+        }
+        
+        this.editingEntryId = null;
+    }
+
+    // Cleanup method to unsubscribe from Firebase listener
+    cleanup() {
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+    }
 }
 
 // Initialize the application when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Food Tracker: DOM loaded, initializing...');
-    new FoodTracker();
+    window.foodTracker = new FoodTracker();
+});
+
+// Cleanup when page unloads
+window.addEventListener('beforeunload', () => {
+    if (window.foodTracker) {
+        window.foodTracker.cleanup();
+    }
 }); 
