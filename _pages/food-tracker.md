@@ -767,26 +767,39 @@ author_profile: false
 
 <script>
 console.log('Firebase script starting...');
-try {
-  var firebaseConfig = {
-    apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
-    authDomain: "magdalena-food-tracker.firebaseapp.com",
-    projectId: "magdalena-food-tracker",
-    storageBucket: "magdalena-food-tracker.firebasestorage.app",
-    messagingSenderId: "208918807918",
-    appId: "1:208918807918:web:0111206b4b854b908ead7f",
-    measurementId: "G-93YXWD4JRL"
-  };
+console.log('User agent:', navigator.userAgent);
 
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-  var db = firebase.firestore();
-  window.db = db;
-  console.log('Firebase initialized successfully');
-  console.log('Firestore instance:', db);
-  console.log('Collection method available:', typeof db.collection);
-} catch (error) {
-  console.error('Firebase initialization failed:', error);
+function initializeFirebase() {
+  try {
+    var firebaseConfig = {
+      apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
+      authDomain: "magdalena-food-tracker.firebaseapp.com",
+      projectId: "magdalena-food-tracker",
+      storageBucket: "magdalena-food-tracker.firebasestorage.app",
+      messagingSenderId: "208918807918",
+      appId: "1:208918807918:web:0111206b4b854b908ead7f",
+      measurementId: "G-93YXWD4JRL"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var db = firebase.firestore();
+    window.db = db;
+    console.log('Firebase initialized successfully');
+    console.log('Firestore instance:', db);
+    console.log('Collection method available:', typeof db.collection);
+  } catch (error) {
+    console.error('Firebase initialization failed:', error);
+  }
+}
+
+// Try to initialize immediately
+if (typeof firebase !== 'undefined') {
+  initializeFirebase();
+} else {
+  // If firebase isn't loaded yet, wait a bit and try again
+  console.log('Firebase not loaded yet, retrying...');
+  setTimeout(initializeFirebase, 1000);
 }
 </script>
 

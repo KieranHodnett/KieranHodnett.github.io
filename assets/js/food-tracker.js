@@ -166,13 +166,21 @@ class FoodTracker {
             console.log('Checking Firebase availability:', {
                 windowDb: !!window.db,
                 dbType: typeof window.db,
-                hasCollection: window.db && typeof window.db.collection === 'function'
+                hasCollection: window.db && typeof window.db.collection === 'function',
+                userAgent: navigator.userAgent
             });
             
+            // For Firefox, be more patient with Firebase loading
             if (!window.db || typeof window.db.collection !== 'function') {
-                console.log('Firebase not available or invalid, using localStorage fallback');
-                this.loadFromLocalStorage();
-                return;
+                if (navigator.userAgent.includes('Firefox')) {
+                    console.log('Firefox detected - Firebase not ready, waiting...');
+                    setTimeout(() => this.loadData(), 1000);
+                    return;
+                } else {
+                    console.log('Firebase not available or invalid, using localStorage fallback');
+                    this.loadFromLocalStorage();
+                    return;
+                }
             }
             
             // Set up real-time listener using Firebase v8 API
@@ -495,16 +503,25 @@ class FoodTracker {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Food Tracker: DOM loaded, initializing...');
     
-    // Give Firebase a moment to initialize
+    // Give Firebase a moment to initialize - longer delay for Firefox
     setTimeout(() => {
         console.log('🔄 Starting Food Tracker initialization...');
         console.log('🔍 Checking Firebase availability:', {
             windowDb: !!window.db,
-            firebaseAvailable: typeof window.db !== 'undefined'
+            firebaseAvailable: typeof window.db !== 'undefined',
+            userAgent: navigator.userAgent
         });
         
-        window.foodTracker = new FoodTracker();
-    }, 1000); // Wait 1 second for Firebase to initialize
+        // Additional check for Firefox
+        if (navigator.userAgent.includes('Firefox')) {
+            console.log('Firefox detected, using additional delay');
+            setTimeout(() => {
+                window.foodTracker = new FoodTracker();
+            }, 500);
+        } else {
+            window.foodTracker = new FoodTracker();
+        }
+    }, 1500); // Increased wait time for Firebase to initialize
 });
 
 // Cleanup when page unloads
