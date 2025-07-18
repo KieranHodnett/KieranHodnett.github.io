@@ -765,8 +765,10 @@ author_profile: false
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
   
   // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
     authDomain: "magdalena-food-tracker.firebaseapp.com",
@@ -780,11 +782,20 @@ author_profile: false
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   
+  // Initialize Analytics (optional)
+  const analytics = getAnalytics(app);
+  
   // Initialize Firestore
   const db = getFirestore(app);
   
   // Make db available globally for the food tracker
   window.db = db;
+  
+  // Debug logging
+  console.log('🔥 Firebase initialized successfully!');
+  console.log('📊 Firestore database:', db);
+  console.log('🌐 Window.db available:', !!window.db);
+  console.log('📈 Analytics:', analytics);
 </script>
 
 <!-- Food Tracker Application -->
