@@ -764,15 +764,15 @@ author_profile: false
 <script type="module">
   console.log('🚀 Firebase script starting...');
   
+  // Import the functions you need from the SDKs you need
+  console.log('📦 Importing Firebase modules...');
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+  
+  console.log('✅ Firebase modules imported successfully');
+  
   try {
-    // Import the functions you need from the SDKs you need
-    console.log('📦 Importing Firebase modules...');
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-    
-    console.log('✅ Firebase modules imported successfully');
-    
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
