@@ -760,60 +760,32 @@ author_profile: false
 }
 </style>
 
-<!-- Firebase SDK (Legacy v8 - Most Reliable for Static Sites) -->
+<!-- Firebase SDK (Legacy v8) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
 <script>
-  console.log('🚀 Firebase script starting...');
-  
-  try {
-    console.log('📦 Firebase SDK loaded, checking availability...');
-    console.log('Firebase available:', typeof firebase !== 'undefined');
-    
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
-      authDomain: "magdalena-food-tracker.firebaseapp.com",
-      projectId: "magdalena-food-tracker",
-      storageBucket: "magdalena-food-tracker.firebasestorage.app",
-      messagingSenderId: "208918807918",
-      appId: "1:208918807918:web:0111206b4b854b908ead7f",
-      measurementId: "G-93YXWD4JRL"
-    };
+console.log('Firebase script starting...');
+try {
+  var firebaseConfig = {
+    apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
+    authDomain: "magdalena-food-tracker.firebaseapp.com",
+    projectId: "magdalena-food-tracker",
+    storageBucket: "magdalena-food-tracker.firebasestorage.app",
+    messagingSenderId: "208918807918",
+    appId: "1:208918807918:web:0111206b4b854b908ead7f",
+    measurementId: "G-93YXWD4JRL"
+  };
 
-    console.log('🔧 Initializing Firebase with config:', firebaseConfig.projectId);
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    console.log('✅ Firebase app initialized');
-    
-    // Initialize Analytics (optional)
-    firebase.analytics();
-    console.log('✅ Analytics initialized');
-    
-    // Initialize Firestore
-    var db = firebase.firestore();
-    console.log('✅ Firestore initialized');
-    
-    // Make db available globally for the food tracker
-    window.db = db;
-    
-    // Debug logging
-    console.log('🔥 Firebase initialized successfully!');
-    console.log('📊 Firestore database:', db);
-    console.log('🌐 Window.db available:', !!window.db);
-    
-  } catch (error) {
-    console.error('❌ Firebase initialization failed:', error);
-    console.log('🔍 Error details:', {
-      message: error.message,
-      stack: error.stack,
-      windowDb: !!window.db
-    });
-    console.log('🔄 Falling back to localStorage only');
-  }
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  var db = firebase.firestore();
+  window.db = db;
+  console.log('Firebase initialized successfully');
+} catch (error) {
+  console.error('Firebase initialization failed:', error);
+}
 </script>
 
 <!-- Food Tracker Application -->

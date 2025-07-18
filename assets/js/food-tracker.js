@@ -1,30 +1,29 @@
+// Food Tracker Application
 class FoodTracker {
     constructor() {
         this.entries = [];
         this.showAllData = false;
-        this.selectedEnjoyment = null;
         this.editingEntryId = null;
-        this.unsubscribe = null; // For real-time listener
-
+        this.unsubscribe = null;
+        
+        console.log('Food Tracker: Constructor called');
         this.initializeApp();
     }
 
     initializeApp() {
+        console.log('Food Tracker: Initializing app...');
         this.setupEventListeners();
-        this.loadData();
         this.setCurrentTime();
+        this.loadData();
     }
 
     setupEventListeners() {
+        console.log('Food Tracker: Setting up event listeners...');
+        
         // Form submission
         const form = document.getElementById('foodForm');
         if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.handleFormSubmit(e);
-                return false;
-            });
+            form.addEventListener('submit', (e) => this.handleFormSubmit(e));
         }
 
         // Enjoyment buttons
@@ -41,26 +40,18 @@ class FoodTracker {
 
         // Event delegation for edit buttons
         document.addEventListener('click', (e) => {
-            console.log('Click detected on element:', e.target.tagName, e.target.className);
-            
             if (e.target.classList.contains('edit-btn')) {
-                console.log('Edit button clicked!');
                 const entryCard = e.target.closest('.entry-card');
                 if (entryCard) {
                     const entryId = entryCard.dataset.entryId;
-                    console.log('Entry ID:', entryId);
                     if (entryId) {
                         this.startEditing(entryId);
-                    } else {
-                        console.error('No entry ID found on card');
                     }
-                } else {
-                    console.error('No entry card found');
                 }
             }
         });
 
-        console.log('Event listeners set up successfully');
+        console.log('Food Tracker: Event listeners set up successfully');
     }
 
     setCurrentTime() {
@@ -73,51 +64,46 @@ class FoodTracker {
     }
 
     selectEnjoyment(event) {
-        // Remove active class from all buttons
+        // Remove selected class from all buttons
         document.querySelectorAll('.enjoyment-btn').forEach(btn => {
-            btn.classList.remove('active');
+            btn.classList.remove('selected');
         });
         
-        // Add active class to clicked button
-        event.target.classList.add('active');
+        // Add selected class to clicked button
+        event.target.classList.add('selected');
         
-        // Store selected enjoyment
-        this.selectedEnjoyment = event.target.dataset.value;
-        console.log('Selected enjoyment:', this.selectedEnjoyment);
+        // Update hidden input
+        const value = event.target.dataset.value;
+        const hiddenInput = document.getElementById('enjoyment');
+        if (hiddenInput) {
+            hiddenInput.value = value;
+        }
+        
+        console.log('Enjoyment selected:', value);
     }
 
     async handleFormSubmit(event) {
         event.preventDefault();
+        console.log('Food Tracker: Form submitted');
         
-        // Get form data
-        const formData = new FormData(event.target);
-        const food = formData.get('food');
-        const timeOfDay = formData.get('timeOfDay');
-        const amount = formData.get('amount');
-        const feeling = formData.get('feeling');
+        const form = event.target;
+        const formData = new FormData(form);
         
-        console.log('Form validation check:', {
-            food: !!food,
-            timeOfDay: !!timeOfDay,
-            amount: !!amount,
-            feeling: !!feeling,
-            selectedEnjoyment: !!this.selectedEnjoyment,
-            selectedEnjoymentValue: this.selectedEnjoyment
-        });
-        
-        // Validate required fields
-        if (!food || !timeOfDay || !amount || !feeling || !this.selectedEnjoyment) {
-            alert('Please fill in all fields and select an enjoyment level.');
+        // Validate enjoyment selection
+        const enjoyment = formData.get('enjoyment');
+        if (!enjoyment) {
+            alert('Please select an enjoyment level!');
             return;
         }
         
         // Create entry object
         const entry = {
-            food: food.trim(),
-            timeOfDay: timeOfDay,
-            amount: amount.trim(),
-            enjoyment: this.selectedEnjoyment,
-            feeling: feeling.trim(),
+            id: this.generateId(),
+            food: formData.get('food'),
+            timeOfDay: formData.get('timeOfDay'),
+            amount: formData.get('amount'),
+            enjoyment: enjoyment,
+            feeling: formData.get('feeling'),
             timestamp: new Date().toISOString()
         };
         
@@ -134,7 +120,7 @@ class FoodTracker {
     }
 
     generateId() {
-        return Math.random().toString(36).substr(2, 9);
+        return 'md' + Math.random().toString(36).substr(2, 9);
     }
 
     clearForm() {
@@ -144,42 +130,32 @@ class FoodTracker {
         }
         
         // Clear enjoyment selection
-        this.selectedEnjoyment = null;
         document.querySelectorAll('.enjoyment-btn').forEach(btn => {
-            btn.classList.remove('active');
+            btn.classList.remove('selected');
         });
         
-        // Reset time to current time
+        // Reset hidden input
+        const hiddenInput = document.getElementById('enjoyment');
+        if (hiddenInput) {
+            hiddenInput.value = '';
+        }
+        
+        // Set current time
         this.setCurrentTime();
     }
 
     showSuccessMessage() {
-        const message = document.createElement('div');
-        message.className = 'success-message';
-        message.textContent = 'Entry added successfully! ✨';
-        message.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #FF69B4, #98FB98);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out;
-        `;
-        
-        document.body.appendChild(message);
-        
-        setTimeout(() => {
-            message.style.animation = 'slideOut 0.3s ease-in';
+        const submitBtn = document.querySelector('.submit-btn');
+        if (submitBtn) {
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Entry Added! ✨</span>';
+            submitBtn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+            
             setTimeout(() => {
-                if (message.parentNode) {
-                    message.parentNode.removeChild(message);
-                }
-            }, 300);
-        }, 2000);
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+            }, 2000);
+        }
     }
 
     async loadData() {
