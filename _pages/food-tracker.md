@@ -783,6 +783,8 @@ try {
   var db = firebase.firestore();
   window.db = db;
   console.log('Firebase initialized successfully');
+  console.log('Firestore instance:', db);
+  console.log('Collection method available:', typeof db.collection);
 } catch (error) {
   console.error('Firebase initialization failed:', error);
 }

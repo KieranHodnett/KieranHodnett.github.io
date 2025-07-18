@@ -163,13 +163,20 @@ class FoodTracker {
             console.log('Loading data from Firebase...');
             
             // Check if Firebase is available
-            if (!window.db) {
-                console.log('Firebase not available, using localStorage fallback');
+            console.log('Checking Firebase availability:', {
+                windowDb: !!window.db,
+                dbType: typeof window.db,
+                hasCollection: window.db && typeof window.db.collection === 'function'
+            });
+            
+            if (!window.db || typeof window.db.collection !== 'function') {
+                console.log('Firebase not available or invalid, using localStorage fallback');
                 this.loadFromLocalStorage();
                 return;
             }
             
             // Set up real-time listener using Firebase v8 API
+            console.log('Setting up Firebase listener with db:', window.db);
             const q = window.db.collection('food_entries').orderBy('timestamp', 'desc');
             
             this.unsubscribe = q.onSnapshot((snapshot) => {
