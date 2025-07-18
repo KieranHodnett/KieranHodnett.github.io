@@ -520,7 +520,17 @@ class FoodTracker {
 // Initialize the application when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Food Tracker: DOM loaded, initializing...');
-    window.foodTracker = new FoodTracker();
+    
+    // Give Firebase a moment to initialize
+    setTimeout(() => {
+        console.log('🔄 Starting Food Tracker initialization...');
+        console.log('🔍 Checking Firebase availability:', {
+            windowDb: !!window.db,
+            firebaseAvailable: typeof window.db !== 'undefined'
+        });
+        
+        window.foodTracker = new FoodTracker();
+    }, 1000); // Wait 1 second for Firebase to initialize
 });
 
 // Cleanup when page unloads

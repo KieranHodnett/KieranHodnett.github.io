@@ -762,40 +762,60 @@ author_profile: false
 
 <!-- Firebase SDK (Modern v9) -->
 <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+  console.log('🚀 Firebase script starting...');
   
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
-    authDomain: "magdalena-food-tracker.firebaseapp.com",
-    projectId: "magdalena-food-tracker",
-    storageBucket: "magdalena-food-tracker.firebasestorage.app",
-    messagingSenderId: "208918807918",
-    appId: "1:208918807918:web:0111206b4b854b908ead7f",
-    measurementId: "G-93YXWD4JRL"
-  };
+  try {
+    // Import the functions you need from the SDKs you need
+    console.log('📦 Importing Firebase modules...');
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+    
+    console.log('✅ Firebase modules imported successfully');
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
+      authDomain: "magdalena-food-tracker.firebaseapp.com",
+      projectId: "magdalena-food-tracker",
+      storageBucket: "magdalena-food-tracker.firebasestorage.app",
+      messagingSenderId: "208918807918",
+      appId: "1:208918807918:web:0111206b4b854b908ead7f",
+      measurementId: "G-93YXWD4JRL"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  
-  // Initialize Analytics (optional)
-  const analytics = getAnalytics(app);
-  
-  // Initialize Firestore
-  const db = getFirestore(app);
-  
-  // Make db available globally for the food tracker
-  window.db = db;
-  
-  // Debug logging
-  console.log('🔥 Firebase initialized successfully!');
-  console.log('📊 Firestore database:', db);
-  console.log('🌐 Window.db available:', !!window.db);
-  console.log('📈 Analytics:', analytics);
+    console.log('🔧 Initializing Firebase with config:', firebaseConfig.projectId);
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    console.log('✅ Firebase app initialized');
+    
+    // Initialize Analytics (optional)
+    const analytics = getAnalytics(app);
+    console.log('✅ Analytics initialized');
+    
+    // Initialize Firestore
+    const db = getFirestore(app);
+    console.log('✅ Firestore initialized');
+    
+    // Make db available globally for the food tracker
+    window.db = db;
+    
+    // Debug logging
+    console.log('🔥 Firebase initialized successfully!');
+    console.log('📊 Firestore database:', db);
+    console.log('🌐 Window.db available:', !!window.db);
+    console.log('📈 Analytics:', analytics);
+    
+  } catch (error) {
+    console.error('❌ Firebase initialization failed:', error);
+    console.log('🔍 Error details:', {
+      message: error.message,
+      stack: error.stack,
+      windowDb: !!window.db
+    });
+  }
 </script>
 
 <!-- Food Tracker Application -->
