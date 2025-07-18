@@ -7,9 +7,16 @@ class FoodTracker {
         this.unsubscribe = null;
         this.firebaseRetryCount = 0;
         this.maxFirebaseRetries = 5;
+        this.firebaseTimeout = null;
         
         console.log('Food Tracker: Constructor called');
         this.initializeApp();
+        
+        // Set a hard timeout to prevent infinite loops
+        this.firebaseTimeout = setTimeout(() => {
+            console.log('Firebase timeout reached, forcing localStorage fallback');
+            this.loadFromLocalStorage();
+        }, 10000); // 10 second timeout
     }
 
     initializeApp() {
@@ -181,6 +188,11 @@ class FoodTracker {
                     return;
                 } else {
                     console.log('Firebase not available or max retries reached, using localStorage fallback');
+                    // Clear the timeout since we're falling back
+                    if (this.firebaseTimeout) {
+                        clearTimeout(this.firebaseTimeout);
+                        this.firebaseTimeout = null;
+                    }
                     this.loadFromLocalStorage();
                     return;
                 }
@@ -188,6 +200,13 @@ class FoodTracker {
             
             // Set up real-time listener using Firebase v8 API
             console.log('Setting up Firebase listener with db:', window.db);
+            
+            // Clear the timeout since Firebase is working
+            if (this.firebaseTimeout) {
+                clearTimeout(this.firebaseTimeout);
+                this.firebaseTimeout = null;
+            }
+            
             const q = window.db.collection('food_entries').orderBy('timestamp', 'desc');
             
             this.unsubscribe = q.onSnapshot((snapshot) => {

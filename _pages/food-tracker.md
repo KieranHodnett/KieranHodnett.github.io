@@ -768,57 +768,27 @@ author_profile: false
 <script>
 console.log('Firebase script starting...');
 console.log('User agent:', navigator.userAgent);
-console.log('Firebase available at start:', typeof firebase !== 'undefined');
 
-function initializeFirebase() {
-  console.log('Attempting to initialize Firebase...');
-  console.log('Firebase object available:', typeof firebase !== 'undefined');
-  
-  try {
-    var firebaseConfig = {
-      apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
-      authDomain: "magdalena-food-tracker.firebaseapp.com",
-      projectId: "magdalena-food-tracker",
-      storageBucket: "magdalena-food-tracker.firebasestorage.app",
-      messagingSenderId: "208918807918",
-      appId: "1:208918807918:web:0111206b4b854b908ead7f",
-      measurementId: "G-93YXWD4JRL"
-    };
+// Simple Firebase initialization for Firefox compatibility
+try {
+  var firebaseConfig = {
+    apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
+    authDomain: "magdalena-food-tracker.firebaseapp.com",
+    projectId: "magdalena-food-tracker",
+    storageBucket: "magdalena-food-tracker.firebasestorage.app",
+    messagingSenderId: "208918807918",
+    appId: "1:208918807918:web:0111206b4b854b908ead7f",
+    measurementId: "G-93YXWD4JRL"
+  };
 
-    console.log('Initializing Firebase app...');
-    firebase.initializeApp(firebaseConfig);
-    console.log('Firebase app initialized');
-    
-    console.log('Initializing analytics...');
-    firebase.analytics();
-    console.log('Analytics initialized');
-    
-    console.log('Getting Firestore instance...');
-    var db = firebase.firestore();
-    console.log('Firestore instance obtained:', db);
-    
-    window.db = db;
-    console.log('Firebase initialized successfully');
-    console.log('Firestore instance:', db);
-    console.log('Collection method available:', typeof db.collection);
-    console.log('Window.db set:', !!window.db);
-  } catch (error) {
-    console.error('Firebase initialization failed:', error);
-    console.error('Error details:', error.message, error.stack);
-  }
-}
-
-// Try to initialize immediately
-if (typeof firebase !== 'undefined') {
-  console.log('Firebase available immediately, initializing...');
-  initializeFirebase();
-} else {
-  // If firebase isn't loaded yet, wait a bit and try again
-  console.log('Firebase not loaded yet, retrying in 1 second...');
-  setTimeout(() => {
-    console.log('Retry attempt - Firebase available:', typeof firebase !== 'undefined');
-    initializeFirebase();
-  }, 1000);
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  var db = firebase.firestore();
+  window.db = db;
+  console.log('Firebase initialized successfully in Firefox');
+} catch (error) {
+  console.error('Firebase initialization failed:', error);
+  window.db = null;
 }
 </script>
 
