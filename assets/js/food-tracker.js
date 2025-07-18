@@ -193,13 +193,10 @@ class FoodTracker {
                 return;
             }
             
-            // Import Firebase functions dynamically
-            const { collection, query, orderBy, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            // Set up real-time listener using Firebase v8 API
+            const q = window.db.collection('food_entries').orderBy('timestamp', 'desc');
             
-            // Set up real-time listener
-            const q = query(collection(window.db, 'food_entries'), orderBy('timestamp', 'desc'));
-            
-            this.unsubscribe = onSnapshot(q, (snapshot) => {
+            this.unsubscribe = q.onSnapshot((snapshot) => {
                 this.entries = [];
                 snapshot.forEach((doc) => {
                     const entry = { id: doc.id, ...doc.data() };
@@ -316,10 +313,7 @@ class FoodTracker {
                 return;
             }
             
-            // Import Firebase functions dynamically
-            const { collection, addDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-            
-            const docRef = await addDoc(collection(window.db, 'food_entries'), entry);
+            const docRef = await window.db.collection('food_entries').add(entry);
             console.log('Entry added with ID:', docRef.id);
             // Note: We don't need to manually update this.entries or displayEntries()
             // because the real-time listener will handle that automatically
@@ -348,10 +342,7 @@ class FoodTracker {
                 return;
             }
             
-            // Import Firebase functions dynamically
-            const { doc, updateDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-            
-            await updateDoc(doc(window.db, 'food_entries', entryId), updatedData);
+            await window.db.collection('food_entries').doc(entryId).update(updatedData);
             console.log('Entry updated successfully');
             // Real-time listener will handle the UI update
         } catch (error) {

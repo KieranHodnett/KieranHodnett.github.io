@@ -760,30 +760,20 @@ author_profile: false
 }
 </style>
 
-<!-- Firebase SDK (Modern v9) -->
-<script type="module">
+<!-- Firebase SDK (Legacy v8 - Most Reliable for Static Sites) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+
+<script>
   console.log('🚀 Firebase script starting...');
   
-  // Use dynamic imports to handle potential failures
-  console.log('📦 Loading Firebase modules...');
-  
   try {
-    // Dynamic imports with await
-    const firebaseApp = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js");
-    const firebaseFirestore = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
-    const firebaseAnalytics = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js");
-    
-    console.log('✅ Firebase modules loaded successfully');
-    
-    const { initializeApp } = firebaseApp;
-    const { getFirestore } = firebaseFirestore;
-    const { getAnalytics } = firebaseAnalytics;
-    
-    console.log('✅ Firebase functions extracted');
+    console.log('📦 Firebase SDK loaded, checking availability...');
+    console.log('Firebase available:', typeof firebase !== 'undefined');
     
     // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
+    var firebaseConfig = {
       apiKey: "AIzaSyBXqQluwjB1Qipws6yWJhXsq0XBvutQ7zQ",
       authDomain: "magdalena-food-tracker.firebaseapp.com",
       projectId: "magdalena-food-tracker",
@@ -796,15 +786,15 @@ author_profile: false
     console.log('🔧 Initializing Firebase with config:', firebaseConfig.projectId);
     
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     console.log('✅ Firebase app initialized');
     
     // Initialize Analytics (optional)
-    const analytics = getAnalytics(app);
+    firebase.analytics();
     console.log('✅ Analytics initialized');
     
     // Initialize Firestore
-    const db = getFirestore(app);
+    var db = firebase.firestore();
     console.log('✅ Firestore initialized');
     
     // Make db available globally for the food tracker
@@ -814,7 +804,6 @@ author_profile: false
     console.log('🔥 Firebase initialized successfully!');
     console.log('📊 Firestore database:', db);
     console.log('🌐 Window.db available:', !!window.db);
-    console.log('📈 Analytics:', analytics);
     
   } catch (error) {
     console.error('❌ Firebase initialization failed:', error);
