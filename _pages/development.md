@@ -5,44 +5,53 @@ permalink: /development/
 author_profile: true
 ---
 
-I'm a versatile Product Engineer with experience building scalable software solutions across healthcare, government, and startup environments. I specialize in full-stack development with a focus on API architecture, system optimization, and cross-functional collaboration.
+I'm a versatile Product Engineer with experience building scalable software solutions across fintech, healthcare, and government environments. I specialize in full-stack development with a focus on user experience, system optimization, and cross-functional collaboration.
 
 ## Professional Highlights
 
-### Current Role: Staff Software Engineer at Magnus Health
-Leading critical infrastructure development for healthcare applications serving 2000+ active clients:
+### Current Role: Founding Engineer at IntellPro
+Building AI-powered research platform for Fortune 500 hedge fund clients:
 
+* **User-Focused Product Development**: Architected modern, design-forward interface prioritizing user experience for complex financial research workflows
+* **Performance Optimization**: Implemented strategic database and frontend improvements, including comprehensive monitoring with OpenTelemetry, Datadog, Jaeger, and Prometheus
+* **Full-Stack Architecture**: Built systems using Next.js 15, React 19, TypeScript, Drizzle ORM, and PostgreSQL
+* **Cross-Team Collaboration**: Partnered with design and product teams to translate user needs into technical solutions, balancing feature delivery with code quality
+
+### Previous Role: Staff Software Engineer at Magnus Health
+Led critical infrastructure development for healthcare applications:
+
+* **Large-Scale Migration**: Successfully migrated 500+ schools from legacy Java system to modern PHP platform with zero downtime, now serving 10,000+ active users with 99.9% uptime
+* **Customer Success**: Collaborated with customer service teams to resolve technical issues and contributed to mobile app improvements that increased Apple App Store rating from 2.3 to 4.8 stars
 * **API Architecture**: Built and maintained Java/Spring Boot APIs connecting mobile health services to backend systems
-* **Performance Optimization**: Enhanced search functionality across 9 interconnected web applications using Datadog monitoring
-* **Impact**: Contributed to mobile app improvements that increased Apple App Store rating from 2.3 to 4.8 stars
-* **Cross-functional Leadership**: Collaborated with customer service teams to resolve technical issues and translate solutions into customer communications
 
 ### Government Experience: NOAA Software Developer
 Developed compliance-driven solutions for federal data processing:
 
-* **Backend Systems**: Designed metadata processing systems using Java, Groovy, and Python for XML data transformation
-* **Accessibility Compliance**: Architected Section 508 compliant PDF generation system
-* **Agile Delivery**: Consistently delivered bi-weekly sprint goals in dynamic team environments
+* **Data Processing & Accessibility**: Designed systems to process and standardize thousands of climate data records for public access
+* **Compliance**: Independently architected Section 508 compliant PDF generation system ensuring federal accessibility standards
+* **Agile Delivery**: Consistently delivered bi-weekly sprint goals in dynamic 2-5 person team environments
 
 ## Technical Expertise
 
 **Languages & Frameworks**
-* **Backend**: Java, Spring Boot, Python, Groovy, PHP
-* **Frontend**: JavaScript, TypeScript, React, React Native, Angular
-* **Mobile**: Cordova, Framework7, Expo
+* **Backend**: Java, Spring Boot, Python, Groovy, PHP, Node.js
+* **Frontend**: JavaScript, TypeScript, React, Next.js, React Native, Angular
+* **Mobile**: React Native, Expo, Cordova, Framework7
 
 **DevOps & Tools**
 * **Infrastructure**: Linux, Docker, Jenkins, Vercel
-* **Databases**: PostgreSQL, SQL
-* **Monitoring**: Datadog, Postman
+* **Databases**: PostgreSQL, SQL, Drizzle ORM, Prisma
+* **Observability**: OpenTelemetry, Datadog, Jaeger, Prometheus
+* **API Development**: tRPC, REST, React Query
 * **Version Control**: Git
 
 **Architecture Patterns**
-* RESTful API design
-* Microservices architecture
-* Database optimization
+* Type-safe API design with tRPC
+* React component architecture and optimization
+* Database query optimization
 * Mobile-first development
-* Compliance-driven development (Section 508)
+* Observability and monitoring systems
+* Authentication systems (OAuth, Azure AD, JWT)
 
 ## Personal Projects
 
@@ -77,27 +86,30 @@ Web App (Next.js) ←→ Shared Backend (tRPC) ←→ Mobile App (React Native)
                     PostgreSQL Database
 ```
 
-### Early Career: iOS Development at Winefetch
-* Single-handedly built and deployed iOS application using Cordova and Framework7
-* Managed full development lifecycle from concept to App Store deployment
-* Demonstrated startup adaptability across multiple time zones and dynamic requirements
+## Freelance Development
+Building custom web solutions for creative professionals and small businesses since 2019:
+
+* **Full-Stack Solutions**: Designed and deployed 15+ websites and web applications with responsive designs and custom functionality
+* **Diverse Stack**: Developed across WordPress, custom PHP applications, and modern JavaScript frameworks
+* **Client-Focused**: Adapted technical approaches to meet unique client needs and budget constraints
 
 ## Development Philosophy
 
 I believe in building software that solves real problems while maintaining high code quality and system reliability. My approach emphasizes:
 
-* **User-Centric Design**: Understanding the end-user impact of technical decisions
-* **Scalable Architecture**: Building systems that can grow with business needs
-* **Cross-functional Collaboration**: Working effectively with non-technical stakeholders
+* **User-Centric Design**: Understanding the end-user impact of technical decisions, from hedge fund analysts to school health personnel
+* **Performance First**: Implementing comprehensive monitoring and optimization strategies to ensure smooth operation with large datasets
+* **Cross-functional Collaboration**: Working effectively with design, product, and customer success teams
 * **Continuous Learning**: Staying current with emerging technologies and best practices
 
 ## Current Focus
 
 I'm particularly interested in:
-* **Type-safe Development**: Leveraging TypeScript and tRPC for robust applications
-* **Mobile-First Architecture**: Building seamless cross-platform experiences
-* **Performance Optimization**: Using monitoring tools to maintain system reliability
-* **Healthcare Technology**: Applying software solutions to improve healthcare workflows
+* **Modern Full-Stack Architecture**: Building scalable applications with Next.js, React, and TypeScript
+* **Observability**: Implementing comprehensive monitoring systems with OpenTelemetry and Datadog
+* **Type-safe Development**: Leveraging TypeScript, tRPC, and Drizzle ORM for robust applications
+* **Performance Optimization**: Database query optimization and frontend rendering improvements
+* **Fintech Solutions**: Applying software solutions to complex financial research workflows
 
 ---
 
