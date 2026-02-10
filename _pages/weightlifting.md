@@ -9,8 +9,8 @@ I'm passionate about strength training with a primary focus on powerlifting, whe
 
 ## Personal Records
 
-**Deadlift:** 475 lbs  
-**Bench Press:** 255 lbs  
+**Deadlift:** 485 lbs  
+**Bench Press:** 265 lbs  
 **Squat:** 385 lbs  
 
 These numbers represent years of consistent training, learning proper technique, and gradually building strength while prioritizing injury prevention and long-term progress.
