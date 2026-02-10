@@ -9,25 +9,25 @@ redirect_from:
 
 # Professional Experience
 
-## Magnus Health - New York, NY
-**Staff Software Engineer** | *May 2022 – Present*
+## IntellPro - New York, NY
+**Founding Engineer** | *August 2025 – Present*
+* **User-Focused Product Development:** Built AI-powered research platform for Fortune 500 hedge fund clients with modern, design-forward interface prioritizing user experience. Optimized performance through strategic database and frontend improvements, implementing comprehensive monitoring to ensure smooth operation with large datasets.
+* **Cross-Team Collaboration:** Partnered with design and product teams to translate user needs into technical solutions, contributing to iterative development cycles balancing feature delivery with code quality.
 
-* **Full-Stack API Development:** Architected and maintained critical API infrastructure connecting mobile health services application to backend database systems using Java and Spring Boot, serving 2000+ active clients with reliable data synchronization and enhanced security protocols.
-* **Production System Optimization:** Enhanced search functionality and database performance across 9 interconnected web applications, utilizing monitoring tools like Datadog and API testing with Postman to ensure 99.9% uptime and optimal user experience.
-* **Cross-Functional Collaboration & User Experience Impact:** Partnered directly with customer service teams to resolve complex technical support tickets, translating technical solutions into customer-facing communications while maintaining consistent delivery velocity through organizational transitions. Contributed to mobile application improvements that drove user satisfaction from a 2.3 to 4.8 star rating on the Apple App Store.
+## Magnus Health - New York, NY
+**Staff Software Engineer** | *May 2022 – August 2025*
+* **Large-Scale Educational Technology Migration:** Successfully led migration of 500+ schools from legacy Java system to modern PHP platform with zero downtime, maintaining continuous service throughout the academic year. The platform now serves 10,000+ active school personnel and students with 99.9% uptime, protecting access to critical student health records and immunization data.
+* **Customer Success & App Improvement:** Collaborated with customer service teams to resolve technical support tickets, translating solutions into clear communications for school staff. Contributed to mobile application improvements increasing user satisfaction from 2.3 to 4.8 stars on Apple App Store.
 
 ## National Oceanic and Atmospheric Association (NOAA) - Asheville, NC
 **Software Developer** | *March 2020 – April 2022*
+* **Data Processing & Accessibility:** Designed systems to process and standardize thousands of climate data records for public access. Independently architected Section 508 compliant PDF generation system ensuring federal accessibility standards for users with disabilities.
+* **Agile Team Collaboration:** Consistently met contract deliverables in dynamic teams of 2-5 developers using Agile methodologies, delivering bi-weekly sprint demonstrations under tight government deadlines.
 
-* **Backend Architecture:** Designed and implemented metadata processing systems using Java, Groovy, and Python to handle diverse XML data formats, creating scalable solutions for complex data manipulation and transformation workflows.
-* **Compliance-Driven Development:** Independently architected Section 508 compliant PDF generation system using internal XML data sources, ensuring accessibility standards while delivering a seamless web application experience.
-* **Agile Delivery Excellence:** Consistently met contract deliverables working in dynamic 2-5 person teams using Agile methodologies, delivering bi-weekly sprint demonstrations and maintaining high-quality code standards under tight deadlines.
-
-## Winefetch - Durham, NC
-**Software Engineering Intern** | *October 2019 – March 2020*
-
-* **Mobile Application Development:** Single-handedly built and deployed iOS application using Cordova, WKWebKit, and Framework7 technologies, creating a streamlined user experience from concept to App Store deployment.
-* **Startup Adaptability:** Demonstrated exceptional flexibility working across multiple time zones and dynamic project requirements, supporting executive travel schedules while maintaining consistent development progress and meeting evolving business needs.
+## Contracting - Remote
+**Web Developer** | *May 2019 – Present*
+* **Full-Stack Web Development:** Designed and deployed websites and web applications for creative professionals and small businesses, implementing responsive designs, content management systems, and custom functionality tailored to client workflows.
+* **Diverse Technology Stack:** Developed solutions across multiple platforms and frameworks including WordPress, custom PHP applications, and modern JavaScript frameworks, adapting technical approaches to meet each client's unique needs and budget constraints.
 
 # Education
 
@@ -36,11 +36,9 @@ redirect_from:
 * Dean's List
 
 # Technical Skills
-
 * **DevOps and CI/CD:** Linux, Git, Jenkins, Vercel, Docker
 * **Programming Languages:** Java, JavaScript, TypeScript, HTML/CSS, Python, PHP, SQL
 * **Frontend Frameworks:** React, React Native, Angular
 
 # Other Interests
-
 Explore more about my work in [Development](/development/), my [Writing](/writing/) projects, [Acting](/acting/) pursuits, and [Weightlifting](/weightlifting/) journey.
